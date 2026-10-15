@@ -1,11 +1,22 @@
-# KynWallet · Inicio de sesión (demo)
+# KynWallet · Inicio de sesión y registro (demo)
 
-Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
-billetera virtual KynWallet. Reproduce el diseño de Figma
-([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)),
-valida los campos y simula la autenticación contra cuentas ficticias, sin backend ni base de datos.
+Demostración funcional, solo del lado del cliente, de las pantallas de inicio de sesión y de
+registro de la billetera virtual KynWallet. Reproduce los diseños de Figma
+([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)
+y [04 · Registro](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=31-2)),
+valida los campos y simula la autenticación y el registro con cuentas ficticias en memoria, sin
+backend ni base de datos.
 
-Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/).
+| Ruta        | Pantalla                                             |
+| ----------- | ---------------------------------------------------- |
+| `/login`    | Inicio de sesión (cualquier otra ruta redirige aquí) |
+| `/registro` | Registro de usuarios                                 |
+
+Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/) y
+[`specs/002-registro-usuario/`](specs/002-registro-usuario/).
+
+Las cuentas creadas en `/registro` viven en memoria junto a las de `VITE_DEMO_USERS`: puedes
+iniciar sesión con ellas hasta recargar la página.
 
 ## Requisitos
 
@@ -50,14 +61,17 @@ Clean Architecture ligera. Las dependencias apuntan hacia el dominio y ESLint lo
 
 ```text
 src/
-├── domain/          # Tipos, reglas de validación y textos. Sin React.
-├── application/     # Caso de uso `authenticate` y puerto `AuthGateway`
-├── infrastructure/  # `InMemoryAuthGateway` (simulación, 1 s) y `loadDemoAccounts`
+├── domain/          # Tipos, reglas de validación (login y registro) y textos. Sin React.
+├── application/     # Casos de uso `authenticate` y `register`; puertos `AuthGateway` y `RegistrationGateway`
+├── infrastructure/  # `InMemoryAuthGateway`, `InMemoryRegistrationGateway` (simulación, 1 s) y `loadDemoAccounts`
 ├── ui/
 │   ├── styles/      # Tokens de Figma (`tokens.css`) y estilos globales
 │   ├── components/  # Button, TextField, PasswordField, Checkbox, SocialButton, Divider, Alert
-│   ├── layout/      # BrandPanel
-│   └── features/login/  # LoginScreen, LoginForm, WelcomeView, reducer y hook
+│   ├── layout/      # AuthLayout (dos paneles) y BrandPanel
+│   ├── routing/     # Rutas /login y /registro sobre la History API
+│   └── features/
+│       ├── login/   # LoginForm, WelcomeView, reducer y hook
+│       └── register/  # RegisterForm, reducer y hook
 ├── App.tsx
 └── main.tsx         # Raíz de composición (inyección de dependencias)
 ```
@@ -73,5 +87,8 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
   en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
-  "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+- Fuera de alcance: recuperar contraseña, acceso con Google/Apple, persistencia de
+  "Recordarme" y bloqueo por intentos fallidos. En el login se muestra un aviso; en el registro,
+  Google y Apple muestran el alert "Próximamente".
+- **Despliegue:** al ser una SPA con rutas reales, el hosting estático debe responder
+  `index.html` para `/login` y `/registro` (Vite ya lo hace en `dev` y `preview`).

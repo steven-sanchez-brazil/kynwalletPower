@@ -1,0 +1,14 @@
+/* Figma 31:2: 16px entre campos (el login usa 22px) — research.md R7. */
+.form {
+  gap: 16px;
+}
+
+.form > :first-child {
+  margin-bottom: 8px;
+}
+
+/* "términos y condiciones": SemiBold en color de marca (tono accesible de 001 R3). */
+.terms {
+  font-weight: 600;
+  color: var(--brand-700);
+}

@@ -14,11 +14,17 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  /** Navega al registro (002 FR-013). */
+  onGoToRegister: () => void;
+  /** Mensaje de cuenta creada al llegar desde el registro (002 FR-012). */
+  successMessage?: string | null;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
-  const { state, change, blur, submit, logout, toggleRemember, showNotice } =
-    useLoginForm(authenticate);
+export function LoginForm({ authenticate, onGoToRegister, successMessage = null }: LoginFormProps) {
+  const { state, change, blur, submit, logout, toggleRemember, showNotice } = useLoginForm(
+    authenticate,
+    successMessage,
+  );
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -39,7 +45,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
     else if (errors.password) passwordRef.current?.focus();
   };
 
-  // FR-016: elementos del diseño fuera del alcance de la demostración.
+  // FR-016: elementos del diseño fuera del alcance de la demostración ("Regístrate" navega desde 002).
   const notAvailable = () => showNotice(MESSAGES.FEATURE_UNAVAILABLE);
 
   return (
@@ -48,6 +54,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         <h1 className={styles.title}>Bienvenido de nuevo</h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
+
+      {state.successMessage && <Alert tone="success">{state.successMessage}</Alert>}
 
       <TextField
         label="Correo electrónico"
@@ -108,7 +116,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <Button variant="link" onClick={onGoToRegister}>
           Regístrate
         </Button>
       </p>

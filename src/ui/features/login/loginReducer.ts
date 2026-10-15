@@ -13,6 +13,8 @@ export type LoginState = {
   welcomeName: string | null;
   rememberMe: boolean;
   notice: string | null;
+  /** Mensaje de cuenta creada que llega desde el registro (002 FR-012, research R8). */
+  successMessage: string | null;
 };
 
 export type LoginAction =
@@ -33,6 +35,7 @@ export const initialLoginState: LoginState = {
   welcomeName: null,
   rememberMe: false,
   notice: null,
+  successMessage: null,
 };
 
 /** Errores visibles: solo los de campos ya tocados (FR-005). */
@@ -76,7 +79,15 @@ export function loginReducer(state: LoginState, action: LoginAction): LoginState
       const fieldErrors = visibleErrors(state.values, touched);
       // FR-006: no se autentica mientras existan errores de validación.
       const status = Object.keys(fieldErrors).length > 0 ? 'editing' : 'submitting';
-      return { ...state, status, touched, fieldErrors, authError: null, notice: null };
+      return {
+        ...state,
+        status,
+        touched,
+        fieldErrors,
+        authError: null,
+        notice: null,
+        successMessage: null,
+      };
     }
 
     case 'result':
