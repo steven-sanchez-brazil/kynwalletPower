@@ -16,7 +16,10 @@ Textos exactos en español, tal como figuran en el diseño de Figma (nodo `2:2`)
 | Enviar | `button` "Iniciar sesión" | En carga: `aria-busy=true`, deshabilitado, texto "Iniciando sesión…" |
 | Separador | texto "o continúa con" | Decorativo |
 | Google / Apple | `button` "Google", `button` "Apple" | Muestran el aviso |
-| Registro | `button` "Regístrate" precedido por "¿No tienes cuenta?" | Muestra el aviso |
+| Registro | `link` "Regístrate" precedido por "¿No tienes cuenta?" | `href="/registro"`: navega sin recarga (US6, FR-020; 2026-10-15 (b)) |
+| Registro exitoso | `status` "¡Cuenta creada con éxito!" + `button` "Cerrar aviso" | Aviso emergente fuera de `main`, esquina superior derecha; ~5 s con pausa por puntero/foco (US7, FR-021; 2026-10-15 (c)) |
+
+**Ruta**: `/login` (`/` y rutas desconocidas redirigen aquí). Título "KynWallet · Iniciar sesión".
 
 **Errores por campo**: texto bajo el campo, vinculado con `aria-describedby`; el campo lleva
 `aria-invalid=true`.

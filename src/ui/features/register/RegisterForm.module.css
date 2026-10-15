@@ -1,0 +1,51 @@
+/* Medidas de Figma 31:2: campos separados 16px, botones sociales con 16px entre sí. */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--neutral-600);
+}
+
+/* El enlace de términos hereda el tamaño de la etiqueta de la casilla. */
+.termsLink {
+  padding: 0;
+  font-size: inherit;
+  font-weight: 600;
+  vertical-align: baseline;
+}
+
+.social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--neutral-600);
+}

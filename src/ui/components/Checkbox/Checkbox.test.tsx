@@ -25,3 +25,20 @@ describe('Checkbox', () => {
     await expectNoA11yViolations(container);
   });
 });
+
+describe('Checkbox · prop error (research R7)', () => {
+  it('sin error no hay aria-invalid', () => {
+    render(<Checkbox label="Acepto" checked={false} onChange={() => undefined} />);
+    expect(screen.getByRole('checkbox')).not.toHaveAttribute('aria-invalid');
+  });
+
+  it('con error: aria-invalid, aria-describedby al mensaje y sin violaciones', async () => {
+    const { container } = render(
+      <Checkbox label="Acepto" checked={false} onChange={() => undefined} error="Obligatorio" />,
+    );
+    const checkbox = screen.getByRole('checkbox', { name: 'Acepto' });
+    expect(checkbox).toHaveAttribute('aria-invalid', 'true');
+    expect(checkbox).toHaveAccessibleDescription('Obligatorio');
+    await expectNoA11yViolations(container);
+  });
+});

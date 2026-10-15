@@ -1,12 +1,17 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router';
 import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { LoginForm } from './LoginForm';
 
 function setup(stub = createAuthStub()) {
   const user = userEvent.setup();
-  render(<LoginForm authenticate={stub.authenticate} />);
+  render(
+    <MemoryRouter>
+      <LoginForm authenticate={stub.authenticate} />
+    </MemoryRouter>,
+  );
   const email = screen.getByLabelText('Correo electrónico');
   const password = screen.getByLabelText('Contraseña');
   const submit = () => user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
@@ -179,7 +184,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -218,7 +223,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();
@@ -231,6 +236,21 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     await user.click(screen.getByRole('button', { name: 'Google' }));
     await submit();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+});
+
+describe('LoginForm · US6 Ir a la pantalla de registro (FR-020)', () => {
+  it('US6-1: "Regístrate" es un enlace a /registro', () => {
+    setup();
+    expect(screen.getByRole('link', { name: 'Regístrate' })).toHaveAttribute('href', '/registro');
+    expect(screen.queryByRole('button', { name: 'Regístrate' })).not.toBeInTheDocument();
+  });
+
+  it('US6-2: se alcanza con Tab justo después de "Apple"', async () => {
+    const { user } = setup();
+    screen.getByRole('button', { name: 'Apple' }).focus();
+    await user.tab();
+    expect(screen.getByRole('link', { name: 'Regístrate' })).toHaveFocus();
   });
 });
 

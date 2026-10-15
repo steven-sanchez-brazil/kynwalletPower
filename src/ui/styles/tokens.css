@@ -17,10 +17,16 @@
   --neutral-border: #92949c; /* 3.03:1: bordes de controles */
   --danger-600: #c62828; /* 5.62:1: mensajes de error */
   --danger-50: #fdecea;
+  --success-600: #1b7a3a; /* 5.40:1: icono y acento del aviso de éxito (research 002 R11) */
   --neutral-50: #f4f5f9;
 
   /* Valores sin variable en Figma */
   --brand-gradient: linear-gradient(121.19deg, #ff8a65 0%, #ef5226 70.71%);
+  --brand-gradient-register: linear-gradient(
+    70.73deg,
+    #ff8a65 31.7%,
+    #ef5226 83.46%
+  ); /* Figma 31:3 */
   --card-surface: rgba(255, 255, 255, 0.16);
   --card-border: rgba(255, 255, 255, 0.35);
   --card-chip: rgba(255, 217, 128, 0.9);

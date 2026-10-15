@@ -30,6 +30,35 @@ y Apple, y enlace "Regístrate").
   formulario se reemplaza por una vista de bienvenida con un botón "Cerrar sesión" que vuelve al
   login vacío.
 
+### Session 2026-10-15
+
+- Q: (cambio de alcance solicitado por el responsable del producto, originado en la feature
+  `002-registro-billetera`) ¿"Regístrate" debe seguir mostrando el aviso de función no
+  disponible? → A: No; pasa a ser un enlace que navega a la pantalla de registro
+  (`register.html`). Sin enrutador: enlace estándar con recarga de página, sin conservar los datos
+  del formulario. Se añaden US6 y FR-020; se ajustan US5, FR-016 y los supuestos. El resto de los
+  elementos fuera de alcance no cambia.
+
+### Session 2026-10-15 (b) — Rutas y mensaje de registro exitoso
+
+Originada en los requisitos del responsable del producto para el registro
+(`specs/002-registro-billetera/spec.md`, Clarifications 2026-10-15 (b)).
+
+- Q: ¿En qué ruta vive el login? → A: `/login`, dentro de una única aplicación con React Router;
+  `/` y las rutas desconocidas redirigen a `/login`. *Sustituye* la navegación por enlace entre
+  dos entradas HTML de la sesión anterior.
+- Q: ¿Qué muestra el login al llegar desde un registro exitoso? → A: el mensaje "¡Cuenta creada
+  con éxito!" (US7, FR-021). La cuenta creada no permite iniciar sesión (se descarta).
+- Q: ¿Cambian Google, Apple o "¿Olvidaste tu contraseña?" en el login? → A: No; los requisitos
+  nuevos solo cubren el registro. Siguen mostrando "Función no disponible en esta demostración".
+- Q: ¿Se elimina la franja con el logo en móvil? → A: No; FR-018 se mantiene sin cambios.
+
+### Session 2026-10-15 (c) — Aviso emergente de registro exitoso
+
+- Q: ¿Cómo se presenta "¡Cuenta creada con éxito!"? → A: aviso emergente temporal en la esquina
+  superior derecha, fuera del formulario, ~5 s, con pausa por puntero o foco, botón "Cerrar
+  aviso" y anuncio como estado. Sustituye "se oculta al enviar el formulario" (US7-2, FR-021).
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Iniciar sesión con credenciales válidas (Priority: P1)
@@ -144,8 +173,8 @@ verifica que el texto se muestra; se vuelve a activar y se oculta.
 ### User Story 5 - Elementos del diseño fuera del alcance de la demostración (Priority: P3)
 
 Como usuario de la demostración, quiero que los elementos visibles del diseño que no forman
-parte del alcance ("¿Olvidaste tu contraseña?", Google, Apple, "Regístrate") me informen que no
-están disponibles, para no quedar con la impresión de un error.
+parte del alcance ("¿Olvidaste tu contraseña?", Google, Apple) me informen que no están
+disponibles, para no quedar con la impresión de un error.
 
 **Why this priority**: garantiza fidelidad al diseño de referencia sin ampliar el alcance
 funcional (YAGNI).
@@ -155,10 +184,55 @@ funcional (YAGNI).
 **Acceptance Scenarios**:
 
 1. **Given** la pantalla de inicio de sesión, **When** el usuario activa "¿Olvidaste tu
-   contraseña?", "Google", "Apple" o "Regístrate", **Then** se muestra el aviso "Función no
-   disponible en esta demostración" y la pantalla conserva los datos ingresados.
+   contraseña?", "Google" o "Apple", **Then** se muestra el aviso "Función no disponible en esta
+   demostración" y la pantalla conserva los datos ingresados.
 2. **Given** la casilla "Recordarme", **When** el usuario la marca o desmarca, **Then** la
    casilla cambia de estado visualmente sin almacenar ningún dato.
+
+---
+
+### User Story 6 - Ir a la pantalla de registro (Priority: P3)
+
+Como persona sin cuenta, quiero que "Regístrate" me lleve a la pantalla de registro, para crear
+mi cuenta sin buscarla por otro medio.
+
+**Why this priority**: conecta las dos pantallas existentes de la demostración.
+
+**Independent Test**: se activa "Regístrate" con ratón o teclado y se verifica que se trata de un
+enlace hacia la pantalla de registro.
+
+**Acceptance Scenarios**:
+
+1. **Given** la pantalla de inicio de sesión, **When** el usuario activa "Regístrate", **Then**
+   la aplicación navega a `/registro`.
+2. **Given** la pantalla de inicio de sesión, **When** el usuario llega a "Regístrate" con Tab,
+   **Then** es anunciado como enlace y se activa con Enter.
+
+---
+
+### User Story 7 - Ver la confirmación de un registro exitoso (Priority: P3)
+
+Como persona que acaba de crear su cuenta, quiero ver una confirmación al llegar al inicio de
+sesión, para saber que el registro terminó bien.
+
+**Why this priority**: cierra el flujo del registro (feature 002); no cambia la autenticación.
+
+**Independent Test**: se llega a `/login` desde un registro exitoso y se verifica el mensaje; se
+llega directamente y se verifica que no aparece.
+
+**Acceptance Scenarios**:
+
+1. **Given** un registro exitoso en `/registro`, **When** la aplicación redirige a `/login`,
+   **Then** aparece en la esquina superior derecha, fuera del formulario, un aviso emergente
+   "¡Cuenta creada con éxito!" anunciado como estado (`role="status"`), sin mover el foco, y el
+   formulario de login está vacío.
+2. **Given** el aviso visible, **When** pasan unos 5 segundos sin el puntero encima ni el foco
+   dentro, **Then** el aviso se oculta solo.
+3. **Given** el aviso visible, **When** el usuario pone el puntero encima o mueve el foco a su
+   botón de cierre, **Then** el tiempo se detiene hasta que salga; y **When** activa "Cerrar
+   aviso", **Then** se oculta de inmediato.
+4. **Given** el aviso ya mostrado, **When** el usuario recarga la página o entra en `/login` por
+   otra vía, **Then** no vuelve a aparecer.
 
 ---
 
@@ -214,15 +288,23 @@ funcional (YAGNI).
 - **FR-015**: La pantalla DEBE cumplir WCAG 2.1 nivel AA: etiquetas asociadas a cada campo,
   errores anunciados por tecnologías de asistencia, mensajes de resultado anunciados de forma
   automática y contraste suficiente.
-- **FR-016**: Los elementos "¿Olvidaste tu contraseña?", "Google", "Apple" y "Regístrate" DEBEN
-  mostrarse según el diseño y, al activarse, informar "Función no disponible en esta
-  demostración".
+- **FR-016**: Los elementos "¿Olvidaste tu contraseña?", "Google" y "Apple" DEBEN mostrarse según
+  el diseño y, al activarse, informar "Función no disponible en esta demostración".
 - **FR-017**: La casilla "Recordarme" DEBE mostrarse y cambiar de estado, sin persistir datos.
 - **FR-018**: La pantalla DEBE adaptarse a anchos desde 320 px hasta escritorio sin
   desplazamiento horizontal; en anchos reducidos el panel de marca puede simplificarse u
   ocultarse manteniendo el logo visible.
 - **FR-019**: Los errores inesperados DEBEN mostrarse con un mensaje comprensible para el usuario,
   sin revelar detalles técnicos.
+- **FR-020**: "Regístrate" DEBE ser un enlace (rol `link`) hacia `/registro`
+  (`specs/002-registro-billetera`), operable con teclado; la navegación NO DEBE conservar ni
+  transmitir los datos del formulario (FR-012). *(Revisado 2026-10-15 (b).)*
+- **FR-021**: La pantalla de inicio de sesión DEBE estar en la ruta `/login` (`/` y las rutas
+  desconocidas redirigen a ella) y, solo cuando se llega desde un registro exitoso, DEBE mostrar
+  "¡Cuenta creada con éxito!" en un aviso emergente temporal (esquina superior derecha; en móvil,
+  arriba a todo el ancho) con `role="status"`, que se oculta solo tras ~5 s, pausa el tiempo con
+  puntero o foco, ofrece "Cerrar aviso", no mueve el foco, respeta `prefers-reduced-motion` y no
+  reaparece al recargar (2026-10-15 (b) y (c)).
 
 ### Key Entities
 
@@ -259,9 +341,10 @@ funcional (YAGNI).
   "Steven Luna"), definida en configuración externa al código.
 - La política de contraseña (8 a 128 caracteres) aplica solo a la validación de formato; la
   demo no implementa reglas de complejidad adicionales.
-- El bloqueo por intentos fallidos, la recuperación de contraseña, el registro, el acceso con
-  Google/Apple y la persistencia de "Recordarme" quedan fuera del alcance; sus elementos se
-  muestran solo por fidelidad al diseño.
+- El bloqueo por intentos fallidos, la recuperación de contraseña, el acceso con Google/Apple y
+  la persistencia de "Recordarme" quedan fuera del alcance; sus elementos se muestran solo por
+  fidelidad al diseño. El registro es una pantalla aparte (feature 002, ruta `/registro`) a la
+  que se llega desde "Regístrate" (US6, FR-020).
 - El idioma de la interfaz es español.
 - No existen BRD ni ARD para esta funcionalidad; si se incorporan, esta especificación DEBE
   alinearse con ellos (Constitución, Principio VI).

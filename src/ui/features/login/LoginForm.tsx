@@ -8,6 +8,8 @@ import { Divider } from '@/ui/components/Divider/Divider';
 import { PasswordField } from '@/ui/components/PasswordField/PasswordField';
 import { SocialButton } from '@/ui/components/SocialButton/SocialButton';
 import { TextField } from '@/ui/components/TextField/TextField';
+import { TextLink } from '@/ui/components/TextLink/TextLink';
+import { ROUTES } from '@/ui/routes';
 import { useLoginForm } from './useLoginForm';
 import { WelcomeView } from './WelcomeView';
 import styles from './LoginForm.module.css';
@@ -39,7 +41,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
     else if (errors.password) passwordRef.current?.focus();
   };
 
-  // FR-016: elementos del diseño fuera del alcance de la demostración.
+  // FR-016: elementos del diseño fuera del alcance de la demostración ("Regístrate" navega, FR-020).
   const notAvailable = () => showNotice(MESSAGES.FEATURE_UNAVAILABLE);
 
   return (
@@ -108,9 +110,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
-          Regístrate
-        </Button>
+        {/* US6, FR-020: navega a la pantalla de registro. */}
+        <TextLink to={ROUTES.register}>Regístrate</TextLink>
       </p>
     </form>
   );

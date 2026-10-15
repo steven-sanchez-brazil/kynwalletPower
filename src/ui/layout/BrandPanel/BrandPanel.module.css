@@ -7,10 +7,43 @@
   color: var(--neutral-0);
 }
 
+.registerPanel {
+  background: var(--brand-gradient-register);
+}
+
 .logo {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+/* Logo de dos puntos del registro (Figma 31:4–31:6): marca de 22px y texto a 6px del borde. */
+.registerLogo {
+  align-items: flex-start;
+  gap: 0;
+}
+
+.registerLogo .logoText {
+  margin-top: 6px;
+}
+
+.registerMark {
+  position: relative;
+  width: 22px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.registerMark img:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.registerMark img:last-child {
+  position: absolute;
+  top: 12px;
+  left: 4px;
 }
 
 .logo img {

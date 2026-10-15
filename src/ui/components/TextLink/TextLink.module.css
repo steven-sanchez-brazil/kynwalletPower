@@ -1,0 +1,8 @@
+/* Un <a> subraya por defecto; el botón de enlace solo subraya al pasar el cursor. */
+.textLink {
+  text-decoration: none;
+}
+
+.textLink:hover {
+  text-decoration: underline;
+}
