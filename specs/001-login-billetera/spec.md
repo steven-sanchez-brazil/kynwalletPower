@@ -217,6 +217,9 @@ funcional (YAGNI).
 - **FR-016**: Los elementos "¿Olvidaste tu contraseña?", "Google", "Apple" y "Regístrate" DEBEN
   mostrarse según el diseño y, al activarse, informar "Función no disponible en esta
   demostración".
+  *Actualizado por 002-registro-usuario: "Regístrate" lleva a `/registro`; el login está en
+  `/login`. Tras crear una cuenta, el login muestra "Cuenta creada correctamente. Ya puedes
+  iniciar sesión."*
 - **FR-017**: La casilla "Recordarme" DEBE mostrarse y cambiar de estado, sin persistir datos.
 - **FR-018**: La pantalla DEBE adaptarse a anchos desde 320 px hasta escritorio sin
   desplazamiento horizontal; en anchos reducidos el panel de marca puede simplificarse u

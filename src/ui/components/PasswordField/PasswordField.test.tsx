@@ -25,6 +25,20 @@ describe('PasswordField', () => {
     expect(toggle()).toHaveAttribute('aria-pressed', 'true');
   });
 
+  it('002 FR-015: admite nombres propios para el control de visibilidad', async () => {
+    render(
+      <PasswordField
+        label="Confirmar contraseña"
+        value="x"
+        onChange={() => {}}
+        showLabel="Mostrar confirmación"
+        hideLabel="Ocultar confirmación"
+      />,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Mostrar confirmación' }));
+    expect(screen.getByRole('button', { name: 'Ocultar confirmación' })).toBeInTheDocument();
+  });
+
   it('US4-2: se vuelve a ocultar', async () => {
     const { input, toggle } = renderField();
     await userEvent.click(toggle());

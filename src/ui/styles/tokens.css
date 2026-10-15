@@ -18,6 +18,8 @@
   --danger-600: #c62828; /* 5.62:1: mensajes de error */
   --danger-50: #fdecea;
   --neutral-50: #f4f5f9;
+  --success-600: #1b6e35; /* 5.62:1 sobre --success-50: mensaje de cuenta creada (002 R7) */
+  --success-50: #e8f5ec;
 
   /* Valores sin variable en Figma */
   --brand-gradient: linear-gradient(121.19deg, #ff8a65 0%, #ef5226 70.71%);

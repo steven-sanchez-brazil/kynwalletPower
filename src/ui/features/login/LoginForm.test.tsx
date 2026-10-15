@@ -4,13 +4,20 @@ import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { LoginForm } from './LoginForm';
 
-function setup(stub = createAuthStub()) {
+function setup(stub = createAuthStub(), successMessage?: string) {
   const user = userEvent.setup();
-  render(<LoginForm authenticate={stub.authenticate} />);
+  const onGoToRegister = vi.fn();
+  render(
+    <LoginForm
+      authenticate={stub.authenticate}
+      onGoToRegister={onGoToRegister}
+      successMessage={successMessage}
+    />,
+  );
   const email = screen.getByLabelText('Correo electrónico');
   const password = screen.getByLabelText('Contraseña');
   const submit = () => user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
-  return { user, stub, email, password, submit };
+  return { user, stub, email, password, submit, onGoToRegister };
 }
 
 describe('LoginForm · US1 Iniciar sesión con credenciales válidas', () => {
@@ -179,7 +186,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -194,6 +201,13 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       expect(stub.authenticate).not.toHaveBeenCalled();
     },
   );
+
+  it('002 US4-2: "Regístrate" navega al registro sin mostrar el aviso', async () => {
+    const { user, onGoToRegister } = setup();
+    await user.click(screen.getByRole('button', { name: 'Regístrate' }));
+    expect(onGoToRegister).toHaveBeenCalledOnce();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
 
   it('US5-2: "Recordarme" cambia de estado sin escribir en el almacenamiento', async () => {
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
@@ -231,6 +245,21 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     await user.click(screen.getByRole('button', { name: 'Google' }));
     await submit();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+});
+
+describe('LoginForm · mensaje de cuenta creada (002 FR-012)', () => {
+  const message = 'Cuenta creada correctamente. Ya puedes iniciar sesión.';
+
+  it('002 US1-1: muestra el mensaje de éxito recibido del registro', () => {
+    setup(createAuthStub(), message);
+    expect(screen.getByRole('status')).toHaveTextContent(message);
+  });
+
+  it('002 US1-5: el mensaje desaparece al enviar el formulario', async () => {
+    const { submit } = setup(createAuthStub(), message);
+    await submit();
+    expect(screen.queryByText(message)).not.toBeInTheDocument();
   });
 });
 
