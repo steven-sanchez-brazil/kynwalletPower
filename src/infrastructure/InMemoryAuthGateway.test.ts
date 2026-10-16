@@ -80,3 +80,80 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(onResolve).toHaveBeenCalledOnce();
   });
 });
+
+describe('InMemoryAuthGateway · register (contracts/register-gateway.md)', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('R1 y R5: registra una cuenta nueva y permite iniciar sesión inmediatamente con ella', async () => {
+    const gw = gateway();
+    const regResult = await gw.register({
+      fullName: '  Ana María López  ',
+      email: '  Ana.Lopez@Example.TEST ',
+      password: 'NuevaClave123',
+    });
+    expect(regResult).toEqual({ kind: 'success', displayName: 'Ana María López' });
+
+    const authResult = await gw.authenticate({
+      email: 'ana.lopez@example.test',
+      password: 'NuevaClave123',
+    });
+    expect(authResult).toEqual({ kind: 'success', displayName: 'Ana María López' });
+  });
+
+  it('R2: correo ya existente (sin distinguir mayúsculas ni espacios) → email-already-exists sin sobrescribir la cuenta', async () => {
+    const gw = gateway();
+    const dupResult = await gw.register({
+      fullName: 'Otro Nombre',
+      email: '  STEVEN.LUNA@EXAMPLE.TEST  ',
+      password: 'OtraPassword99',
+    });
+    expect(dupResult).toEqual({ kind: 'email-already-exists' });
+
+    const originalAuth = await gw.authenticate({
+      email: TEST_ACCOUNT.email,
+      password: TEST_ACCOUNT.password,
+    });
+    expect(originalAuth).toEqual({ kind: 'success', displayName: TEST_ACCOUNT.displayName });
+  });
+
+  it('R3: configuración inicial nula → unavailable en register', async () => {
+    const gw = new InMemoryAuthGateway(null, { delayMs: 0 });
+    const result = await gw.register({
+      fullName: 'Ana López',
+      email: 'ana@example.test',
+      password: 'NuevaClave123',
+    });
+    expect(result).toEqual({ kind: 'unavailable' });
+  });
+
+  it('R4: una excepción interna durante register → unavailable sin rechazar la promesa', async () => {
+    const broken = [
+      {
+        get email(): string {
+          throw new Error('boom');
+        },
+        password: 'x',
+        displayName: 'x',
+      },
+    ];
+    await expect(
+      gateway(broken).register({
+        fullName: 'Ana López',
+        email: 'ana@example.test',
+        password: 'NuevaClave123',
+      }),
+    ).resolves.toEqual({ kind: 'unavailable' });
+  });
+
+  it('R6: el resultado de register nunca contiene la contraseña', async () => {
+    const gw = gateway();
+    const result = await gw.register({
+      fullName: 'Ana López',
+      email: 'ana@example.test',
+      password: 'SecretRegisterPass99',
+    });
+    expect(JSON.stringify(result)).not.toContain('SecretRegisterPass99');
+  });
+});

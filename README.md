@@ -1,11 +1,16 @@
-# KynWallet · Inicio de sesión (demo)
+# KynWallet · Inicio de sesión y Registro (demo)
 
-Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
-billetera virtual KynWallet. Reproduce el diseño de Figma
-([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)),
-valida los campos y simula la autenticación contra cuentas ficticias, sin backend ni base de datos.
+Demostración funcional, solo del lado del cliente, de las pantallas de inicio de sesión (`/login`)
+y registro de usuarios (`/register`) de la billetera virtual KynWallet. Reproduce los diseños de Figma
+([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2) y
+[04 · Registro](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual--Prototipos?node-id=31-2)),
+valida los campos en línea y simula la autenticación y el alta de cuentas en memoria durante la
+sesión activa del navegador, sin backend ni base de datos.
 
-Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/).
+Especificaciones, planes y tareas:
+
+- Inicio de sesión: [`specs/001-login-billetera/`](specs/001-login-billetera/)
+- Registro de usuarios: [`specs/002-registro-usuarios/`](specs/002-registro-usuarios/)
 
 ## Requisitos
 
@@ -31,6 +36,17 @@ VITE_DEMO_USERS=[{"email":"tu.correo@example.com","password":"minimo-8-caractere
   compilado. Usa únicamente cuentas ficticias.
 - Si la variable falta o es inválida, la pantalla muestra "Servicio de acceso no disponible".
 
+## Rutas y flujos disponibles
+
+- **`/login` (por defecto en `/`):** Pantalla de inicio de sesión. Permite autenticarse con las
+  cuentas de demostración o con cualquier cuenta creada durante la sesión activa en `/register`.
+  El enlace `"Regístrate"` navega a `/register`.
+- **`/register`:** Pantalla de registro de usuarios con validación inline de nombre completo,
+  correo electrónico, contraseña (mínimo 8 caracteres), confirmación de contraseña y aceptación
+  obligatoria de términos y condiciones. Al crear una cuenta muestra un mensaje de éxito durante
+  ~1.5 s y redirige automáticamente a `/login`. El enlace `"Inicia sesión"` navega a `/login` y
+  los botones de `"Google"` y `"Apple"` muestran el aviso `"Próximamente"`.
+
 ## Scripts
 
 | Comando                           | Descripción                                                                                                                                           |
@@ -51,14 +67,16 @@ Clean Architecture ligera. Las dependencias apuntan hacia el dominio y ESLint lo
 ```text
 src/
 ├── domain/          # Tipos, reglas de validación y textos. Sin React.
-├── application/     # Caso de uso `authenticate` y puerto `AuthGateway`
+├── application/     # Casos de uso `authenticate`, `registerAccount` y puerto `AuthGateway`
 ├── infrastructure/  # `InMemoryAuthGateway` (simulación, 1 s) y `loadDemoAccounts`
 ├── ui/
 │   ├── styles/      # Tokens de Figma (`tokens.css`) y estilos globales
 │   ├── components/  # Button, TextField, PasswordField, Checkbox, SocialButton, Divider, Alert
-│   ├── layout/      # BrandPanel
-│   └── features/login/  # LoginScreen, LoginForm, WelcomeView, reducer y hook
-├── App.tsx
+│   ├── layout/      # BrandPanel (incluye tarjeta ilustrativa KynCard)
+│   └── features/
+│       ├── login/     # LoginScreen, LoginForm, WelcomeView, reducer y hook
+│       └── register/  # RegisterForm, registerReducer y useRegisterForm
+├── App.tsx          # Enrutamiento ligero (/login ↔ /register) con History API
 └── main.tsx         # Raíz de composición (inyección de dependencias)
 ```
 
@@ -70,8 +88,9 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
 - **Contraste (pendiente de aprobación de diseño):** varios colores de Figma no alcanzan
   WCAG 2.1 AA (botón 2.83:1, enlaces 3.56:1, textos secundarios 3.28:1, bordes 1.40:1). Se
   usan variantes más oscuras del mismo tono (`--brand-700`, `--neutral-600`, `--neutral-border`
-  en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
+  en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3) y
+  `specs/002-registro-usuarios/research.md` (R6).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
-  "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+- Fuera de alcance: recuperar contraseña, acceso OAuth real con Google/Apple, persistencia de
+  "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso informativo.

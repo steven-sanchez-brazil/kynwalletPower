@@ -13,6 +13,14 @@ describe('Alert', () => {
     expect(screen.getByRole('status')).toHaveTextContent('Aviso');
   });
 
+  it('FR-009: tone="success" usa role="status" y aplica estilo de éxito sin violaciones a11y', async () => {
+    const { container } = render(<Alert tone="success">Cuenta creada</Alert>);
+    const alert = screen.getByRole('status');
+    expect(alert).toHaveTextContent('Cuenta creada');
+    expect(alert).toHaveClass('success');
+    await expectNoA11yViolations(container);
+  });
+
   it('FR-015: no tiene violaciones de accesibilidad', async () => {
     const { container } = render(<Alert tone="error">Falló</Alert>);
     await expectNoA11yViolations(container);
