@@ -7,12 +7,28 @@ import { PasswordField } from './PasswordField';
 function renderField(props: Partial<Parameters<typeof PasswordField>[0]> = {}) {
   render(<PasswordField label="Contraseña" value="secreto-123" onChange={() => {}} {...props} />);
   return {
-    input: screen.getByLabelText('Contraseña'),
+    input: screen.getByLabelText(props.label ?? 'Contraseña'),
     toggle: () => screen.getByRole('button', { name: /contraseña$/ }),
   };
 }
 
 describe('PasswordField', () => {
+  it('Registro FR-020: permite distinguir confirmación y deshabilita su control', async () => {
+    const { input } = renderField({
+      label: 'Confirmar contraseña',
+      visibilityLabels: { show: 'Mostrar confirmación', hide: 'Ocultar confirmación' },
+    });
+    await userEvent.click(screen.getByRole('button', { name: 'Mostrar confirmación' }));
+    expect(input).toHaveAttribute('type', 'text');
+    expect(screen.getByRole('button', { name: 'Ocultar confirmación' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+  });
+  it('Registro FR-010: no cambia visibilidad durante envío', () => {
+    renderField({ disabled: true });
+    expect(screen.getByRole('button', { name: 'Mostrar contraseña' })).toBeDisabled();
+  });
   it('US4-1: oculta por defecto y muestra al activar el control', async () => {
     const { input, toggle } = renderField();
     expect(input).toHaveAttribute('type', 'password');

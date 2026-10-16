@@ -1,0 +1,12 @@
+.link {
+  color: var(--brand-700);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 2px;
+  border-radius: 4px;
+}
+.link:hover {
+  color: var(--brand-800);
+  text-decoration: underline;
+}

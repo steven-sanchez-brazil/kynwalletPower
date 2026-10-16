@@ -1,5 +1,6 @@
 import type { LoginCredentials } from './auth';
-import { MESSAGES } from './messages';
+import type { RegistrationErrors, RegistrationValues } from './registration';
+import { MESSAGES, REGISTRATION_MESSAGES } from './messages';
 
 export const EMAIL_MAX_LENGTH = 254;
 export const PASSWORD_MIN_LENGTH = 8;
@@ -43,5 +44,20 @@ export function validateCredentials({ email, password }: LoginCredentials): Cred
   const passwordError = validatePassword(password);
   if (emailError) errors.email = emailError;
   if (passwordError) errors.password = passwordError;
+  return errors;
+}
+
+/** Reglas de Registro: reutiliza los límites y la validación de credenciales del login. */
+export function validateRegistration(values: RegistrationValues): RegistrationErrors {
+  const errors: RegistrationErrors = { ...validateCredentials(values) };
+  if (!values.fullName.trim()) errors.fullName = REGISTRATION_MESSAGES.NAME_REQUIRED;
+  else if (values.fullName.trim().length > 80)
+    errors.fullName = REGISTRATION_MESSAGES.NAME_TOO_LONG;
+  if (!values.confirmPassword) errors.confirmPassword = REGISTRATION_MESSAGES.CONFIRM_REQUIRED;
+  else if (values.confirmPassword.length > PASSWORD_MAX_LENGTH)
+    errors.confirmPassword = REGISTRATION_MESSAGES.CONFIRM_TOO_LONG;
+  else if (values.confirmPassword !== values.password)
+    errors.confirmPassword = REGISTRATION_MESSAGES.CONFIRM_MISMATCH;
+  if (values.termsAccepted !== true) errors.termsAccepted = REGISTRATION_MESSAGES.TERMS_REQUIRED;
   return errors;
 }

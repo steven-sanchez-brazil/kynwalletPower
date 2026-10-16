@@ -28,6 +28,8 @@ describe('loginReducer', () => {
     });
     expect(next.status).toBe('welcome');
     expect(next.welcomeName).toBe('Ana');
+    // Inicio FR-009: el éxito conserva solo el nombre, nunca las credenciales.
+    expect(next.values).toEqual({ email: '', password: '' });
   });
 
   it('US1-5: logout → estado inicial', () => {

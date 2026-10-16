@@ -81,7 +81,12 @@ export function loginReducer(state: LoginState, action: LoginAction): LoginState
 
     case 'result':
       if (action.result.kind === 'success') {
-        return { ...state, status: 'welcome', welcomeName: action.result.displayName };
+        return {
+          ...state,
+          values: { email: '', password: '' },
+          status: 'welcome',
+          welcomeName: action.result.displayName,
+        };
       }
       return {
         ...state,

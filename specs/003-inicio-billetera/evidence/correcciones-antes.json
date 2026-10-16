@@ -1,0 +1,40 @@
+{
+  "desktop": {
+    "balanceColor": "rgb(22, 24, 44)",
+    "balanceTitleColor": "rgb(115, 116, 139)",
+    "cardColor": "rgb(22, 24, 44)",
+    "client": 1425,
+    "headerColor": "rgb(22, 24, 44)",
+    "height": 600,
+    "menuColor": "rgb(22, 24, 44)",
+    "navClient": 276,
+    "navOverflow": "visible",
+    "navScroll": 276,
+    "profileBottom": 873.0416870117188,
+    "scroll": 1425,
+    "sidebarBottom": 897.0417070388794,
+    "sidebarColor": "rgb(22, 24, 44)",
+    "sidebarPosition": "static",
+    "sidebarTop": -8.666666984558105,
+    "width": 1440
+  },
+  "mobile": {
+    "balanceColor": "rgb(22, 24, 44)",
+    "balanceTitleColor": "rgb(22, 24, 44)",
+    "cardColor": "rgb(22, 24, 44)",
+    "client": 375,
+    "headerColor": "rgb(22, 24, 44)",
+    "height": 844,
+    "menuColor": "rgb(22, 24, 44)",
+    "navClient": 0,
+    "navOverflow": "visible",
+    "navScroll": 0,
+    "profileBottom": 0,
+    "scroll": 375,
+    "sidebarBottom": 0,
+    "sidebarColor": "rgb(22, 24, 44)",
+    "sidebarPosition": "static",
+    "sidebarTop": 0,
+    "width": 390
+  }
+}

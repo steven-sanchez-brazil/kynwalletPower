@@ -179,7 +179,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -218,7 +218,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();

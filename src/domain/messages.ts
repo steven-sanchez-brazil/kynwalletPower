@@ -9,3 +9,16 @@ export const MESSAGES = {
   UNAVAILABLE: 'Servicio de acceso no disponible. Intenta más tarde.',
   FEATURE_UNAVAILABLE: 'Función no disponible en esta demostración',
 } as const;
+
+export const REGISTRATION_MESSAGES = {
+  NAME_REQUIRED: 'Ingresa tu nombre completo',
+  NAME_TOO_LONG: 'El nombre no puede superar 80 caracteres',
+  CONFIRM_REQUIRED: 'Confirma tu contraseña',
+  CONFIRM_MISMATCH: 'Las contraseñas deben coincidir',
+  CONFIRM_TOO_LONG: 'La confirmación no puede superar 128 caracteres',
+  TERMS_REQUIRED: 'Acepta los términos y condiciones',
+  UNAVAILABLE: 'No pudimos completar el registro. Intenta nuevamente.',
+  SUCCESS:
+    'Registro de demostración completado. Para iniciar sesión, usa una cuenta de prueba configurada.',
+  TERMS_UNAVAILABLE: 'Los términos y condiciones no están disponibles en esta demostración.',
+} as const;

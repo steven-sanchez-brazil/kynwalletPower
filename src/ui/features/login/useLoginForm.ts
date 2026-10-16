@@ -3,7 +3,7 @@ import type { Authenticate } from '@/application/authenticate';
 import { validateCredentials } from '@/domain/validation';
 import { initialLoginState, loginReducer, type Field, type FieldErrors } from './loginReducer';
 
-export function useLoginForm(authenticate: Authenticate) {
+export function useLoginForm(authenticate: Authenticate, onAuthenticated?: (name: string) => void) {
   const [state, dispatch] = useReducer(loginReducer, initialLoginState);
   const inFlight = useRef(false);
   const mounted = useRef(true);
@@ -31,10 +31,13 @@ export function useLoginForm(authenticate: Authenticate) {
     inFlight.current = true;
     void authenticate(state.values).then((result) => {
       inFlight.current = false;
-      if (mounted.current) dispatch({ type: 'result', result });
+      if (mounted.current) {
+        dispatch({ type: 'result', result });
+        if (result.kind === 'success') onAuthenticated?.(result.displayName);
+      }
     });
     return {};
-  }, [authenticate, state.values]);
+  }, [authenticate, state.values, onAuthenticated]);
 
   const logout = useCallback(() => dispatch({ type: 'logout' }), []);
 

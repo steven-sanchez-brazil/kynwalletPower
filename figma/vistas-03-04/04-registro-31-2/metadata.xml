@@ -1,0 +1,49 @@
+<!-- Fuente: Figma MCP get_metadata (página 0:1), archivo pMArqPGrwekkonUVIZLSn4, subárbol del nodo 31:2. Extraído el 2026-10-16. -->
+<frame id="31:2" name="04 · Registro" x="1540" y="0" width="1440" height="1024">
+  <rounded-rectangle id="31:3" name="Brand Panel" x="0" y="0" width="620" height="1024" />
+  <ellipse id="31:4" name="Logo dot" x="56" y="64" width="10" height="28" />
+  <ellipse id="31:5" name="Logo dot 2" x="60" y="76" width="14" height="14" />
+  <text id="31:6" name="KynWallet" x="78" y="70" width="128" height="31" />
+  <text id="31:7" name="Headline 1" x="56" y="400" width="272" height="48" />
+  <text id="31:8" name="Headline 2" x="56" y="452" width="399" height="48" />
+  <text id="31:9" name="Subtext" x="56" y="510" width="500" height="52" />
+  <rounded-rectangle id="31:10" name="Card Mockup" x="56" y="750" width="360" height="210" />
+  <text id="31:11" name="Card name" x="82" y="774" width="66" height="18" />
+  <rounded-rectangle id="31:12" name="Chip" x="378" y="770" width="38" height="28" />
+  <rounded-rectangle id="31:13" name="Chip line" x="378" y="782" width="38" height="4" />
+  <text id="31:14" name="Card number" x="82" y="854" width="217" height="24" />
+  <text id="31:15" name="Card holder" x="82" y="924" width="91" height="16" />
+  <text id="31:16" name="Card exp" x="368" y="924" width="36" height="16" />
+  <text id="31:17" name="Heading" x="820" y="140" width="216" height="36" />
+  <text id="31:18" name="Subheading" x="820" y="182" width="400" height="19" />
+  <text id="31:19" name="Name label" x="820" y="222" width="120" height="17" />
+  <rounded-rectangle id="31:20" name="Name input" x="820" y="246" width="400" height="52" />
+  <text id="31:21" name="Name placeholder" x="836" y="262" width="129" height="18" />
+  <text id="31:22" name="Email label" x="820" y="314" width="125" height="17" />
+  <rounded-rectangle id="31:23" name="Email input" x="820" y="338" width="400" height="52" />
+  <text id="31:24" name="Email placeholder" x="836" y="354" width="165" height="18" />
+  <text id="31:25" name="Pass label" x="820" y="406" width="78" height="17" />
+  <rounded-rectangle id="31:26" name="Pass input" x="820" y="430" width="400" height="52" />
+  <text id="31:27" name="Pass placeholder" x="836" y="446" width="68" height="18" />
+  <ellipse id="31:28" name="Eye icon" x="1184" y="450" width="20" height="12" />
+  <text id="31:29" name="Confirm label" x="820" y="498" width="146" height="17" />
+  <rounded-rectangle id="31:30" name="Confirm input" x="820" y="522" width="400" height="52" />
+  <text id="31:31" name="Confirm placeholder" x="836" y="538" width="68" height="18" />
+  <ellipse id="31:32" name="Eye icon 2" x="1184" y="542" width="20" height="12" />
+  <rounded-rectangle id="31:33" name="Terms checkbox" x="820" y="592" width="20" height="20" />
+  <text id="31:34" name="Terms text" x="852" y="590" width="72" height="17" />
+  <text id="31:35" name="Terms link" x="926" y="590" width="158" height="17" />
+  <rounded-rectangle id="31:36" name="Btn Register" x="820" y="628" width="400" height="52" />
+  <text id="31:37" name="Btn text" x="820" y="642" width="400" height="19" />
+  <rounded-rectangle id="31:38" name="Div left" x="820" y="708" width="165" height="1" />
+  <text id="31:39" name="Div text" x="990" y="700" width="97" height="16" />
+  <rounded-rectangle id="31:40" name="Div right" x="1120" y="708" width="100" height="1" />
+  <rounded-rectangle id="31:41" name="Google btn" x="820" y="730" width="192" height="48" />
+  <ellipse id="31:42" name="Google dot" x="880" y="744" width="20" height="20" />
+  <text id="31:43" name="Google text" x="908" y="744" width="52" height="18" />
+  <rounded-rectangle id="31:44" name="Apple btn" x="1028" y="730" width="192" height="48" />
+  <ellipse id="31:45" name="Apple dot" x="1088" y="744" width="20" height="20" />
+  <text id="31:46" name="Apple text" x="1116" y="744" width="43" height="18" />
+  <text id="31:47" name="Footer Q" x="920" y="798" width="124" height="17" />
+  <text id="31:48" name="Footer link" x="1052" y="798" width="84" height="17" />
+</frame>

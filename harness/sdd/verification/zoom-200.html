@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verificación local de Registro · ampliación 200 %</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      iframe {
+        display: block;
+        border: 0;
+        width: 50vw;
+        height: 50vh;
+        transform: scale(2);
+        transform-origin: top left;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Solo verificación: contenido al doble de tamaño con viewport CSS a la mitad.
+         No modifica Registro ni cambia el zoom del perfil del navegador. -->
+    <iframe title="Registro ampliado al 200 %" src="/registro"></iframe>
+  </body>
+</html>

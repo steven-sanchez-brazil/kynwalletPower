@@ -3,6 +3,7 @@ import type { Authenticate } from '@/application/authenticate';
 import { MESSAGES } from '@/domain/messages';
 import { Alert } from '@/ui/components/Alert/Alert';
 import { Button } from '@/ui/components/Button/Button';
+import { NavigationLink, type Navigate } from '@/ui/components/NavigationLink/NavigationLink';
 import { Checkbox } from '@/ui/components/Checkbox/Checkbox';
 import { Divider } from '@/ui/components/Divider/Divider';
 import { PasswordField } from '@/ui/components/PasswordField/PasswordField';
@@ -14,11 +15,15 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  onNavigate?: Navigate;
+  onAuthenticated?: (name: string) => void;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
-  const { state, change, blur, submit, logout, toggleRemember, showNotice } =
-    useLoginForm(authenticate);
+export function LoginForm({ authenticate, onNavigate, onAuthenticated }: LoginFormProps) {
+  const { state, change, blur, submit, logout, toggleRemember, showNotice } = useLoginForm(
+    authenticate,
+    onAuthenticated,
+  );
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -108,9 +113,9 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <NavigationLink href="/registro" onNavigate={onNavigate}>
           Regístrate
-        </Button>
+        </NavigationLink>
       </p>
     </form>
   );

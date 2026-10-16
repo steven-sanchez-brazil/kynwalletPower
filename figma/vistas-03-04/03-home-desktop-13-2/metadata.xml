@@ -1,0 +1,129 @@
+<!-- Fuente: Figma MCP get_metadata (página 0:1), archivo pMArqPGrwekkonUVIZLSn4, subárbol del nodo 13:2. Extraído el 2026-10-16. -->
+<frame id="13:2" name="03 · Home — Desktop" x="0" y="1100" width="1440" height="1024">
+  <rounded-rectangle id="13:3" name="Sidebar" x="0" y="0" width="260" height="1024" />
+  <ellipse id="13:4" name="Logo dot 1" x="32" y="48" width="14" height="22" />
+  <ellipse id="13:5" name="Logo dot 2" x="38" y="56" width="14" height="14" />
+  <text id="13:6" name="KynWallet" x="58" y="52" width="108" height="27" />
+  <rounded-rectangle id="13:7" name="Nav active bg" x="16" y="138" width="228" height="44" />
+  <rounded-rectangle id="13:8" name="Nav active bar" x="16" y="138" width="4" height="44" />
+  <rounded-rectangle id="13:9" name="Nav Inicio dot" x="36" y="156" width="8" height="8" />
+  <text id="13:10" name="Nav Inicio" x="56" y="150" width="39" height="18" />
+  <rounded-rectangle id="13:11" name="Nav Historial dot" x="36" y="208" width="8" height="8" />
+  <text id="13:12" name="Nav Historial" x="56" y="202" width="58" height="18" />
+  <rounded-rectangle id="13:13" name="Nav Tarjetas dot" x="36" y="260" width="8" height="8" />
+  <text id="13:14" name="Nav Tarjetas" x="56" y="254" width="57" height="18" />
+  <rounded-rectangle id="13:15" name="Nav Pagos dot" x="36" y="312" width="8" height="8" />
+  <text id="13:16" name="Nav Pagos" x="56" y="306" width="44" height="18" />
+  <rounded-rectangle id="13:17" name="Nav Perfil dot" x="36" y="364" width="8" height="8" />
+  <text id="13:18" name="Nav Perfil" x="56" y="358" width="37" height="18" />
+  <rounded-rectangle id="13:19" name="Sidebar divider" x="24" y="420" width="212" height="1" />
+  <rounded-rectangle id="13:20" name="User card" x="16" y="936" width="228" height="64" />
+  <ellipse id="13:21" name="User avatar" x="30" y="952" width="32" height="32" />
+  <text id="13:22" name="User initials" x="36" y="959" width="11" height="17" />
+  <text id="13:23" name="User name" x="72" y="950" width="40" height="17" />
+  <text id="13:24" name="User email" x="72" y="970" width="108" height="13" />
+  <rounded-rectangle id="13:25" name="Top Bar" x="260" y="0" width="1180" height="72" />
+  <text id="13:26" name="Page title" x="300" y="22" width="59" height="27" />
+  <text id="13:27" name="Page subtitle" x="300" y="48" width="171" height="16" />
+  <rounded-rectangle id="13:28" name="Bell bg" x="1338" y="16" width="40" height="40" />
+  <ellipse id="13:29" name="Bell dot" x="1368" y="18" width="10" height="10" />
+  <ellipse id="13:30" name="Avatar bg" x="1390" y="16" width="40" height="40" />
+  <text id="13:31" name="Avatar init" x="1403" y="28" width="11" height="17" />
+  <rounded-rectangle id="13:32" name="Card Saldo disponible" x="300" y="100" width="256" height="110" />
+  <rounded-rectangle id="13:33" name="Accent top" x="300" y="100" width="256" height="4" />
+  <text id="13:34" name="CL Saldo disponible" x="320" y="118" width="95" height="15" />
+  <text id="13:35" name="CV Saldo disponible" x="320" y="140" width="119" height="29" />
+  <text id="13:36" name="CS Saldo disponible" x="320" y="180" width="128" height="15" />
+  <rounded-rectangle id="13:37" name="Card Ingresos del mes" x="604" y="100" width="256" height="110" />
+  <text id="13:38" name="CL Ingresos del mes" x="624" y="118" width="98" height="15" />
+  <text id="13:39" name="CV Ingresos del mes" x="624" y="140" width="142" height="29" />
+  <text id="13:40" name="CS Ingresos del mes" x="624" y="180" width="125" height="15" />
+  <rounded-rectangle id="13:41" name="Card Gastos del mes" x="908" y="100" width="256" height="110" />
+  <text id="13:42" name="CL Gastos del mes" x="928" y="118" width="89" height="15" />
+  <text id="13:43" name="CV Gastos del mes" x="928" y="140" width="132" height="29" />
+  <text id="13:44" name="CS Gastos del mes" x="928" y="180" width="120" height="15" />
+  <rounded-rectangle id="13:45" name="Card Movimientos" x="1212" y="100" width="256" height="110" />
+  <text id="13:46" name="CL Movimientos" x="1232" y="118" width="74" height="15" />
+  <text id="13:47" name="CV Movimientos" x="1232" y="140" width="32" height="29" />
+  <text id="13:48" name="CS Movimientos" x="1232" y="180" width="52" height="15" />
+  <text id="13:49" name="Quick actions title" x="300" y="240" width="136" height="19" />
+  <rounded-rectangle id="13:50" name="Act Enviar" x="300" y="270" width="136" height="76" />
+  <rounded-rectangle id="13:51" name="Act icon Enviar" x="316" y="284" width="36" height="36" />
+  <rounded-rectangle id="13:52" name="Act icon dot 0" x="326" y="294" width="16" height="16" />
+  <text id="13:53" name="Act name 0" x="360" y="284" width="43" height="17" />
+  <text id="13:54" name="Act desc 0" x="360" y="304" width="86" height="13" />
+  <rounded-rectangle id="13:55" name="Act Recibir" x="452" y="270" width="136" height="76" />
+  <rounded-rectangle id="13:56" name="Act icon Recibir" x="468" y="284" width="36" height="36" />
+  <rounded-rectangle id="13:57" name="Act icon dot 1" x="478" y="294" width="16" height="16" />
+  <text id="13:58" name="Act name 1" x="512" y="284" width="48" height="17" />
+  <text id="13:59" name="Act desc 1" x="512" y="304" width="71" height="13" />
+  <rounded-rectangle id="13:60" name="Act Recargar" x="604" y="270" width="136" height="76" />
+  <rounded-rectangle id="13:61" name="Act icon Recargar" x="620" y="284" width="36" height="36" />
+  <rounded-rectangle id="13:62" name="Act icon dot 2" x="630" y="294" width="16" height="16" />
+  <text id="13:63" name="Act name 2" x="664" y="284" width="61" height="17" />
+  <text id="13:64" name="Act desc 2" x="664" y="304" width="65" height="13" />
+  <rounded-rectangle id="13:65" name="Act Pagar" x="756" y="270" width="136" height="76" />
+  <rounded-rectangle id="13:66" name="Act icon Pagar" x="772" y="284" width="36" height="36" />
+  <rounded-rectangle id="13:67" name="Act icon dot 3" x="782" y="294" width="16" height="16" />
+  <text id="13:68" name="Act name 3" x="816" y="284" width="40" height="17" />
+  <text id="13:69" name="Act desc 3" x="816" y="304" width="82" height="13" />
+  <text id="13:70" name="Mov title" x="300" y="352" width="179" height="19" />
+  <text id="13:71" name="Ver todo" x="880" y="354" width="68" height="16" />
+  <rounded-rectangle id="13:72" name="Mov bg" x="300" y="382" width="680" height="420" />
+  <ellipse id="13:73" name="Mov icon 0" x="320" y="402" width="44" height="44" />
+  <rounded-rectangle id="13:74" name="Mov arrow 0" x="336" y="412" width="12" height="12" />
+  <text id="13:75" name="Mov name 0" x="380" y="404" width="113" height="18" />
+  <text id="13:76" name="Mov sub 0" x="380" y="426" width="145" height="15" />
+  <text id="13:77" name="Mov amt 0" x="820" y="412" width="140" height="18" />
+  <rounded-rectangle id="13:78" name="Mov div 0" x="316" y="460" width="640" height="1" />
+  <ellipse id="13:79" name="Mov icon 1" x="320" y="480" width="44" height="44" />
+  <rounded-rectangle id="13:80" name="Mov arrow 1" x="336" y="490" width="12" height="12" />
+  <text id="13:81" name="Mov name 1" x="380" y="482" width="48" height="18" />
+  <text id="13:82" name="Mov sub 1" x="380" y="504" width="134" height="15" />
+  <text id="13:83" name="Mov amt 1" x="820" y="490" width="140" height="18" />
+  <rounded-rectangle id="13:84" name="Mov div 1" x="316" y="538" width="640" height="1" />
+  <ellipse id="13:85" name="Mov icon 2" x="320" y="558" width="44" height="44" />
+  <rounded-rectangle id="13:86" name="Mov arrow 2" x="336" y="568" width="12" height="12" />
+  <text id="13:87" name="Mov name 2" x="380" y="560" width="104" height="18" />
+  <text id="13:88" name="Mov sub 2" x="380" y="582" width="121" height="15" />
+  <text id="13:89" name="Mov amt 2" x="820" y="568" width="140" height="18" />
+  <rounded-rectangle id="13:90" name="Mov div 2" x="316" y="616" width="640" height="1" />
+  <ellipse id="13:91" name="Mov icon 3" x="320" y="636" width="44" height="44" />
+  <rounded-rectangle id="13:92" name="Mov arrow 3" x="336" y="646" width="12" height="12" />
+  <text id="13:93" name="Mov name 3" x="380" y="638" width="53" height="18" />
+  <text id="13:94" name="Mov sub 3" x="380" y="660" width="138" height="15" />
+  <text id="13:95" name="Mov amt 3" x="820" y="646" width="140" height="18" />
+  <rounded-rectangle id="13:96" name="Mov div 3" x="316" y="694" width="640" height="1" />
+  <ellipse id="13:97" name="Mov icon 4" x="320" y="714" width="44" height="44" />
+  <rounded-rectangle id="13:98" name="Mov arrow 4" x="336" y="724" width="12" height="12" />
+  <text id="13:99" name="Mov name 4" x="380" y="716" width="110" height="18" />
+  <text id="13:100" name="Mov sub 4" x="380" y="738" width="130" height="15" />
+  <text id="13:101" name="Mov amt 4" x="820" y="724" width="140" height="18" />
+  <text id="13:102" name="Card title" x="1020" y="352" width="75" height="19" />
+  <rounded-rectangle id="13:103" name="Card visual" x="1020" y="382" width="380" height="210" />
+  <ellipse id="13:104" name="Glass circle 1" x="1280" y="332" width="160" height="160" />
+  <ellipse id="13:105" name="Glass circle 2" x="1040" y="452" width="100" height="100" />
+  <rounded-rectangle id="13:106" name="Chip" x="1046" y="414" width="38" height="28" />
+  <rounded-rectangle id="13:107" name="Chip inner" x="1046" y="416" width="38" height="4" />
+  <text id="13:108" name="Card name" x="1046" y="394" width="66" height="18" />
+  <text id="13:109" name="Card number" x="1046" y="466" width="216" height="22" />
+  <text id="13:110" name="Card holder" x="1046" y="528" width="91" height="16" />
+  <text id="13:111" name="Card exp" x="1330" y="528" width="36" height="16" />
+  <text id="13:112" name="Resumen title" x="1020" y="604" width="138" height="19" />
+  <rounded-rectangle id="13:113" name="Resumen bg" x="1020" y="634" width="380" height="168" />
+  <ellipse id="13:114" name="Cat dot 0" x="1040" y="655" width="12" height="12" />
+  <text id="13:115" name="Cat lbl 0" x="1062" y="650" width="88" height="16" />
+  <text id="13:116" name="Cat amt 0" x="1300" y="650" width="80" height="16" />
+  <rounded-rectangle id="13:117" name="Bar bg 0" x="1062" y="672" width="296" height="6" />
+  <rounded-rectangle id="13:118" name="Bar fill 0" x="1062" y="672" width="89" height="6" />
+  <ellipse id="13:119" name="Cat dot 1" x="1040" y="699" width="12" height="12" />
+  <text id="13:120" name="Cat lbl 1" x="1062" y="694" width="93" height="16" />
+  <text id="13:121" name="Cat amt 1" x="1300" y="694" width="80" height="16" />
+  <rounded-rectangle id="13:122" name="Bar bg 1" x="1062" y="716" width="296" height="6" />
+  <rounded-rectangle id="13:123" name="Bar fill 1" x="1062" y="716" width="192" height="6" />
+  <ellipse id="13:124" name="Cat dot 2" x="1040" y="743" width="12" height="12" />
+  <text id="13:125" name="Cat lbl 2" x="1062" y="738" width="58" height="16" />
+  <text id="13:126" name="Cat amt 2" x="1300" y="738" width="80" height="16" />
+  <rounded-rectangle id="13:127" name="Bar bg 2" x="1062" y="760" width="296" height="6" />
+  <rounded-rectangle id="13:128" name="Bar fill 2" x="1062" y="760" width="53" height="6" />
+</frame>

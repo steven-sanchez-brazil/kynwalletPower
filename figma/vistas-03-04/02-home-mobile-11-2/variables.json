@@ -1,0 +1,10 @@
+{
+  "source": {
+    "tool": "get_variable_defs",
+    "fileKey": "pMArqPGrwekkonUVIZLSn4",
+    "nodeId": "11:2",
+    "extractedAt": "2026-10-16"
+  },
+  "response": {},
+  "note": "Respuesta real y vacía: el frame no usa variables ni estilos de Figma. Los valores directos están en design-context.md."
+}

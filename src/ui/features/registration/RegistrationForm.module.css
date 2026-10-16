@@ -1,0 +1,71 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.title {
+  margin: 0;
+  color: var(--neutral-900);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 36px;
+}
+.subtitle {
+  margin: 0;
+  color: var(--neutral-600);
+  font-size: 16px;
+  line-height: 19px;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.fields > div {
+  gap: 7px;
+}
+.fields label {
+  line-height: 17px;
+}
+.fields button img {
+  filter: brightness(0);
+  opacity: 0.55;
+}
+.terms {
+  margin-top: 2px;
+}
+.terms button {
+  padding: 0;
+  text-align: left;
+}
+.divider {
+  margin-top: 4px;
+}
+.social {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.footer {
+  margin: 2px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: var(--neutral-600);
+  font-size: 14px;
+}
+.demo {
+  margin: 0;
+  color: var(--neutral-600);
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+}

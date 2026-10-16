@@ -5,6 +5,7 @@
 }
 
 .box {
+  flex-shrink: 0;
   display: grid;
   place-content: center;
   width: 20px;
@@ -41,4 +42,24 @@
   font-weight: 500;
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.text {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.error {
+  margin: 0;
+  color: var(--danger-600);
+  font-size: 13px;
+}
+.box[aria-invalid='true'] {
+  border-color: var(--danger-600);
 }

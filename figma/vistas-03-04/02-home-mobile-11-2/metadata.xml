@@ -1,0 +1,61 @@
+<!-- Fuente: Figma MCP get_metadata, archivo pMArqPGrwekkonUVIZLSn4, nodo 11:2. Extraído el 2026-10-16. -->
+<frame id="11:2" name="02 · Home" x="1604" y="1222" width="390" height="844">
+  <rounded-rectangle id="11:3" name="Header BG" x="0" y="0" width="390" height="260" />
+  <text id="11:4" name="Hola label" x="24" y="56" width="31" height="13" />
+  <text id="11:5" name="Diego" x="24" y="72" width="69" height="29" />
+  <rounded-rectangle id="11:6" name="Bell BG" x="326" y="56" width="40" height="40" />
+  <ellipse id="11:7" name="Notif Dot" x="351" y="58" width="8" height="8" />
+  <text id="11:8" name="Saldo label" x="24" y="124" width="105" height="13" />
+  <text id="11:9" name="Saldo" x="24" y="142" width="179" height="44" />
+  <rounded-rectangle id="11:10" name="MXN Badge" x="24" y="196" width="44" height="22" />
+  <text id="11:11" name="MXN" x="33" y="199" width="26" height="13" />
+  <text id="11:12" name="Cuenta" x="74" y="200" width="106" height="16" />
+  <rounded-rectangle id="11:13" name="Actions Card" x="16" y="232" width="358" height="96" />
+  <rounded-rectangle id="11:14" name="Enviar icon bg" x="38" y="248" width="52" height="52" />
+  <text id="11:15" name="Enviar label" x="32" y="308" width="64" height="15" />
+  <rounded-rectangle id="11:16" name="Recibir icon bg" x="128" y="248" width="52" height="52" />
+  <text id="11:17" name="Recibir label" x="122" y="308" width="64" height="15" />
+  <rounded-rectangle id="11:18" name="Recargar icon bg" x="218" y="248" width="52" height="52" />
+  <text id="11:19" name="Recargar label" x="212" y="308" width="64" height="15" />
+  <rounded-rectangle id="11:20" name="Más icon bg" x="308" y="248" width="52" height="52" />
+  <text id="11:21" name="Más label" x="302" y="308" width="64" height="15" />
+  <text id="11:22" name="Movimientos title" x="24" y="352" width="108" height="21" />
+  <text id="11:23" name="Ver todo" x="298" y="354" width="68" height="16" />
+  <rounded-rectangle id="11:24" name="Mov María González" x="16" y="384" width="358" height="64" />
+  <ellipse id="11:25" name="Icon circle" x="28" y="395" width="42" height="42" />
+  <rounded-rectangle id="11:26" name="Arrow" x="40" y="407" width="18" height="18" />
+  <text id="11:27" name="Arrow sym" x="42" y="406" width="16" height="19" />
+  <text id="11:28" name="Mov name" x="82" y="396" width="105" height="17" />
+  <text id="11:29" name="Mov sub" x="82" y="417" width="58" height="15" />
+  <text id="11:30" name="Mov amount" x="270" y="406" width="90" height="17" />
+  <rounded-rectangle id="11:31" name="Mov Netflix" x="16" y="458" width="358" height="64" />
+  <ellipse id="11:32" name="Icon circle" x="28" y="469" width="42" height="42" />
+  <rounded-rectangle id="11:33" name="Arrow" x="40" y="481" width="18" height="18" />
+  <text id="11:34" name="Arrow sym" x="42" y="480" width="16" height="19" />
+  <text id="11:35" name="Mov name" x="82" y="470" width="45" height="17" />
+  <text id="11:36" name="Mov sub" x="82" y="491" width="58" height="15" />
+  <text id="11:37" name="Mov amount" x="270" y="480" width="90" height="17" />
+  <rounded-rectangle id="11:38" name="Mov Recarga BBVA" x="16" y="532" width="358" height="64" />
+  <ellipse id="11:39" name="Icon circle" x="28" y="543" width="42" height="42" />
+  <rounded-rectangle id="11:40" name="Arrow" x="40" y="555" width="18" height="18" />
+  <text id="11:41" name="Arrow sym" x="42" y="554" width="16" height="19" />
+  <text id="11:42" name="Mov name" x="82" y="544" width="97" height="17" />
+  <text id="11:43" name="Mov sub" x="82" y="565" width="60" height="15" />
+  <text id="11:44" name="Mov amount" x="270" y="554" width="90" height="17" />
+  <rounded-rectangle id="11:45" name="Mov Spotify" x="16" y="606" width="358" height="64" />
+  <ellipse id="11:46" name="Icon circle" x="28" y="617" width="42" height="42" />
+  <rounded-rectangle id="11:47" name="Arrow" x="40" y="629" width="18" height="18" />
+  <text id="11:48" name="Arrow sym" x="42" y="628" width="16" height="19" />
+  <text id="11:49" name="Mov name" x="82" y="618" width="49" height="17" />
+  <text id="11:50" name="Mov sub" x="82" y="639" width="62" height="15" />
+  <text id="11:51" name="Mov amount" x="270" y="628" width="90" height="17" />
+  <rounded-rectangle id="11:52" name="Bottom Nav" x="0" y="792" width="390" height="52" />
+  <rounded-rectangle id="11:53" name="Nav Inicio indicator" x="44" y="792" width="36" height="2" />
+  <text id="11:54" name="Nav Inicio" x="28" y="818" width="68" height="13" />
+  <rounded-rectangle id="11:55" name="Nav Historial indicator" x="126" y="792" width="36" height="2" />
+  <text id="11:56" name="Nav Historial" x="110" y="818" width="68" height="13" />
+  <rounded-rectangle id="11:57" name="Nav QR indicator" x="208" y="792" width="36" height="2" />
+  <text id="11:58" name="Nav QR" x="192" y="818" width="68" height="13" />
+  <rounded-rectangle id="11:59" name="Nav Perfil indicator" x="290" y="792" width="36" height="2" />
+  <text id="11:60" name="Nav Perfil" x="274" y="818" width="68" height="13" />
+</frame>

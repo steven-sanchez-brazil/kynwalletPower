@@ -19,6 +19,16 @@
   max-width: 400px;
 }
 
+.registration .formPanel {
+  align-items: flex-start;
+  padding: 40px 16px;
+}
+@media (min-width: 960px) {
+  .registration .formPanel {
+    padding: clamp(40px, 13.671875dvh, 140px) 44px 40px 24px;
+  }
+}
+
 @media (max-width: 479px) {
   .formPanel {
     align-items: flex-start;

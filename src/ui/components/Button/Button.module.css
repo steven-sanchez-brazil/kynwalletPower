@@ -16,6 +16,23 @@
   cursor: not-allowed;
 }
 
+.spinner {
+  flex-shrink: 0;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
 .primary {
   height: var(--control-height);
   border: none;

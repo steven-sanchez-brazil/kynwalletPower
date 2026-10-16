@@ -4,6 +4,20 @@ import { expectNoA11yViolations } from '@/test/a11y';
 import { Button } from './Button';
 
 describe('Button', () => {
+  it('Registro FR-010: muestra spinner solo durante la carga sin cambiar el nombre accesible', () => {
+    const { rerender } = render(
+      <Button loading loadingLabel="Creando cuenta…">
+        Crear cuenta
+      </Button>,
+    );
+    const button = screen.getByRole('button', { name: 'Creando cuenta…' });
+    expect(screen.getByTitle('Cargando').closest('svg')).toBeVisible();
+    expect(button).toContainElement(screen.getByTitle('Cargando'));
+    expect(button).toBeDisabled();
+    rerender(<Button>Crear cuenta</Button>);
+    expect(screen.queryByTitle('Cargando')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Crear cuenta' })).toBeEnabled();
+  });
   it('renderiza su texto como botón con type="button" por defecto', () => {
     render(<Button>Iniciar sesión</Button>);
     const button = screen.getByRole('button', { name: 'Iniciar sesión' });
