@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createAuthenticate } from '@/application/authenticate';
+import { createRegister } from '@/application/register';
 import { InMemoryAuthGateway } from '@/infrastructure/InMemoryAuthGateway';
 import { loadDemoAccounts } from '@/infrastructure/loadDemoAccounts';
 import '@/ui/styles/tokens.css';
@@ -9,13 +10,16 @@ import { App } from './App';
 
 // Raíz de composición: único lugar que conoce las implementaciones concretas (Constitución 2.5).
 const accounts = loadDemoAccounts(import.meta.env.VITE_DEMO_USERS);
-const authenticate = createAuthenticate(new InMemoryAuthGateway(accounts));
+// Un único almacén en memoria: las cuentas registradas pueden iniciar sesión (002 FR-011).
+const gateway = new InMemoryAuthGateway(accounts);
+const authenticate = createAuthenticate(gateway);
+const register = createRegister(gateway);
 
 const root = document.getElementById('root');
 if (root) {
   createRoot(root).render(
     <StrictMode>
-      <App authenticate={authenticate} />
+      <App authenticate={authenticate} register={register} />
     </StrictMode>,
   );
 }

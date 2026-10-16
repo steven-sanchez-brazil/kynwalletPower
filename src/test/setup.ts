@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom/vitest';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, beforeEach } from 'vitest';
+
+// Cada prueba empieza en la raíz: la navegación modifica la URL compartida de jsdom.
+beforeEach(() => {
+  window.history.replaceState(null, '', '/');
+});
 
 afterEach(() => {
   cleanup();

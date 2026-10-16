@@ -80,3 +80,58 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(onResolve).toHaveBeenCalledOnce();
   });
 });
+
+describe('InMemoryAuthGateway.register (contracts/registration-gateway.md)', () => {
+  const newAccount = {
+    email: 'diego@example.test',
+    password: 'clave-segura',
+    displayName: 'Diego Martínez',
+  };
+
+  it('US1-2: la cuenta registrada puede iniciar sesión', async () => {
+    const store = gateway();
+    await expect(store.register(newAccount)).resolves.toEqual({ kind: 'success' });
+    await expect(
+      store.authenticate({ email: newAccount.email, password: newAccount.password }),
+    ).resolves.toEqual({ kind: 'success', displayName: 'Diego Martínez' });
+  });
+
+  it('no modifica el arreglo de cuentas recibido', async () => {
+    const accounts = [TEST_ACCOUNT];
+    await gateway(accounts).register(newAccount);
+    expect(accounts).toEqual([TEST_ACCOUNT]);
+  });
+
+  it.each([
+    ['cuenta demo', TEST_ACCOUNT.email],
+    ['cuenta demo con mayúsculas y espacios', '  STEVEN.Luna@Example.test '],
+  ])('US3-1/US3-3: correo de %s → email-taken', async (_label, email) => {
+    await expect(gateway().register({ ...newAccount, email })).resolves.toEqual({
+      kind: 'email-taken',
+    });
+  });
+
+  it('US3-1: correo registrado en la sesión → email-taken', async () => {
+    const store = gateway();
+    await store.register(newAccount);
+    await expect(store.register({ ...newAccount, displayName: 'Otra' })).resolves.toEqual({
+      kind: 'email-taken',
+    });
+  });
+
+  it('Caso límite: configuración ausente → unavailable', async () => {
+    await expect(
+      new InMemoryAuthGateway(null, { delayMs: 0 }).register(newAccount),
+    ).resolves.toEqual({ kind: 'unavailable' });
+  });
+
+  it('FR-010: espera delayMs antes de responder', async () => {
+    vi.useFakeTimers();
+    const onResolve = vi.fn();
+    new InMemoryAuthGateway([TEST_ACCOUNT]).register(newAccount).then(onResolve);
+    await vi.advanceTimersByTimeAsync(999);
+    expect(onResolve).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(1);
+    expect(onResolve).toHaveBeenCalledOnce();
+  });
+});
