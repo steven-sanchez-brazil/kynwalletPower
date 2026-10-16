@@ -13,3 +13,22 @@ export type DemoAccount = {
   password: string;
   displayName: string;
 };
+
+export type RegistrationData = {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  termsAccepted: boolean;
+};
+
+export type RegisterAccountInput = {
+  fullName: string;
+  email: string;
+  password: string;
+};
+
+export type RegisterResult =
+  | { kind: 'success'; displayName: string }
+  | { kind: 'email-already-exists' }
+  | { kind: 'unavailable' };

@@ -232,6 +232,20 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     await submit();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
+
+  it('US3-2, FR-008: al pasar onNavigateToRegister, pulsar "Regístrate" invoca la navegación a registro', async () => {
+    const user = userEvent.setup();
+    const onNavigateToRegister = vi.fn();
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        onNavigateToRegister={onNavigateToRegister}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Regístrate' }));
+    expect(onNavigateToRegister).toHaveBeenCalledOnce();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
 });
 
 describe('LoginForm · seguridad (FR-012)', () => {
