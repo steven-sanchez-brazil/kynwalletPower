@@ -1,0 +1,10 @@
+# Fin de línea LF en todos los sistemas (Windows, macOS y Linux), igual que exige Prettier.
+# Evita que Git convierta a CRLF en Windows y que los archivos aparezcan modificados sin cambios.
+* text=auto eol=lf
+
+# Binarios: sin conversión
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
