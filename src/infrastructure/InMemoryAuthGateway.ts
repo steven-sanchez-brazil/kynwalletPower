@@ -1,18 +1,22 @@
 import type { AuthGateway } from '@/application/ports/AuthGateway';
-import type { AuthResult, DemoAccount, LoginCredentials } from '@/domain/auth';
+import type { RegistrationGateway } from '@/application/ports/RegistrationGateway';
+import type { AuthResult, DemoAccount, LoginCredentials, RegisterResult } from '@/domain/auth';
 import { normalizeEmail } from '@/domain/validation';
 
 const DEFAULT_DELAY_MS = 1000;
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-/** Autenticación simulada en memoria (contracts/auth-gateway.md, research.md R5). */
-export class InMemoryAuthGateway implements AuthGateway {
-  private readonly accounts: readonly DemoAccount[] | null;
+/**
+ * Autenticación y registro simulados en memoria (contracts/auth-gateway.md,
+ * contracts/registration-gateway.md). Las cuentas registradas se pierden al recargar.
+ */
+export class InMemoryAuthGateway implements AuthGateway, RegistrationGateway {
+  private readonly accounts: DemoAccount[] | null;
   private readonly delayMs: number;
 
   constructor(accounts: readonly DemoAccount[] | null, options: { delayMs?: number } = {}) {
-    this.accounts = accounts;
+    this.accounts = accounts ? [...accounts] : null;
     this.delayMs = options.delayMs ?? DEFAULT_DELAY_MS;
   }
 
@@ -20,8 +24,7 @@ export class InMemoryAuthGateway implements AuthGateway {
     await wait(this.delayMs);
     try {
       if (!this.accounts) return { kind: 'unavailable' };
-      const email = normalizeEmail(credentials.email);
-      const account = this.accounts.find((candidate) => normalizeEmail(candidate.email) === email);
+      const account = this.findByEmail(this.accounts, credentials.email);
       // Correo inexistente y contraseña incorrecta producen el mismo resultado (FR-010).
       if (!account || account.password !== credentials.password) {
         return { kind: 'invalid-credentials' };
@@ -30,5 +33,22 @@ export class InMemoryAuthGateway implements AuthGateway {
     } catch {
       return { kind: 'unavailable' };
     }
+  }
+
+  async register(account: DemoAccount): Promise<RegisterResult> {
+    await wait(this.delayMs);
+    try {
+      if (!this.accounts) return { kind: 'unavailable' };
+      if (this.findByEmail(this.accounts, account.email)) return { kind: 'email-taken' };
+      this.accounts.push({ ...account, email: normalizeEmail(account.email) });
+      return { kind: 'success' };
+    } catch {
+      return { kind: 'unavailable' };
+    }
+  }
+
+  private findByEmail(accounts: readonly DemoAccount[], email: string): DemoAccount | undefined {
+    const normalized = normalizeEmail(email);
+    return accounts.find((candidate) => normalizeEmail(candidate.email) === normalized);
   }
 }

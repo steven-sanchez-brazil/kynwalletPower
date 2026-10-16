@@ -8,15 +8,19 @@ import { Divider } from '@/ui/components/Divider/Divider';
 import { PasswordField } from '@/ui/components/PasswordField/PasswordField';
 import { SocialButton } from '@/ui/components/SocialButton/SocialButton';
 import { TextField } from '@/ui/components/TextField/TextField';
+import { RouteLink } from '@/ui/routing/RouteLink';
+import { ROUTES } from '@/ui/routing/router';
 import { useLoginForm } from './useLoginForm';
 import { WelcomeView } from './WelcomeView';
 import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  /** Aviso de éxito de una acción previa, p. ej. el registro (002 FR-013). */
+  notice?: string;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, notice }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -48,6 +52,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         <h1 className={styles.title}>Bienvenido de nuevo</h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
+
+      {notice && <Alert tone="success">{notice}</Alert>}
 
       <TextField
         label="Correo electrónico"
@@ -108,9 +114,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
-          Regístrate
-        </Button>
+        <RouteLink to={ROUTES.register}>Regístrate</RouteLink>
       </p>
     </form>
   );

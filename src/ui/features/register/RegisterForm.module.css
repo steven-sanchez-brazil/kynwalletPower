@@ -1,0 +1,53 @@
+/* Frame "04 · Registro": más campos que el login, con espaciado vertical menor (research.md R7). */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--neutral-600);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.termsLink {
+  padding: 0 2px;
+  font-size: 14px;
+}
+
+.social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--neutral-600);
+}

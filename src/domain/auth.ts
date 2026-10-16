@@ -13,3 +13,6 @@ export type DemoAccount = {
   password: string;
   displayName: string;
 };
+
+export type RegisterResult =
+  { kind: 'success' } | { kind: 'email-taken' } | { kind: 'unavailable' };

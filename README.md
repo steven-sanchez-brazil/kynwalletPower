@@ -1,11 +1,18 @@
-# KynWallet · Inicio de sesión (demo)
+# KynWallet · Inicio de sesión y registro (demo)
 
-Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
-billetera virtual KynWallet. Reproduce el diseño de Figma
-([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)),
-valida los campos y simula la autenticación contra cuentas ficticias, sin backend ni base de datos.
+Demostración funcional, solo del lado del cliente, de las pantallas de inicio de sesión y registro
+de la billetera virtual KynWallet. Reproduce el diseño de Figma
+([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)
+y [04 · Registro](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=31-2)),
+valida los campos y simula la autenticación y el registro en memoria, sin backend ni base de datos.
 
-Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/).
+| Ruta        | Pantalla                                                           |
+| ----------- | ------------------------------------------------------------------ |
+| `/login`    | Inicio de sesión. La raíz y las rutas desconocidas llevan aquí.    |
+| `/registro` | Registro de usuarios. Al terminar, vuelve a `/login` con un aviso. |
+
+Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-billetera/) y
+[`specs/002-registro-usuarios/`](specs/002-registro-usuarios/).
 
 ## Requisitos
 
@@ -30,6 +37,8 @@ VITE_DEMO_USERS=[{"email":"tu.correo@example.com","password":"minimo-8-caractere
 - ⚠️ Al ser una aplicación solo-cliente, el valor de `VITE_DEMO_USERS` queda incluido en el bundle
   compilado. Usa únicamente cuentas ficticias.
 - Si la variable falta o es inválida, la pantalla muestra "Servicio de acceso no disponible".
+- Las cuentas creadas en `/registro` se guardan solo en memoria: permiten iniciar sesión hasta que
+  se recarga la página. No se puede registrar un correo que ya exista.
 
 ## Scripts
 
@@ -51,13 +60,16 @@ Clean Architecture ligera. Las dependencias apuntan hacia el dominio y ESLint lo
 ```text
 src/
 ├── domain/          # Tipos, reglas de validación y textos. Sin React.
-├── application/     # Caso de uso `authenticate` y puerto `AuthGateway`
-├── infrastructure/  # `InMemoryAuthGateway` (simulación, 1 s) y `loadDemoAccounts`
+├── application/     # Casos de uso `authenticate` y `register`, puertos `AuthGateway` y `RegistrationGateway`
+├── infrastructure/  # `InMemoryAuthGateway` (login y registro simulados, 1 s) y `loadDemoAccounts`
 ├── ui/
 │   ├── styles/      # Tokens de Figma (`tokens.css`) y estilos globales
 │   ├── components/  # Button, TextField, PasswordField, Checkbox, SocialButton, Divider, Alert
-│   ├── layout/      # BrandPanel
-│   └── features/login/  # LoginScreen, LoginForm, WelcomeView, reducer y hook
+│   ├── layout/      # AuthLayout (dos paneles) y BrandPanel
+│   ├── routing/     # Navegación `/login` ↔ `/registro` sobre la History API
+│   └── features/
+│       ├── login/     # LoginForm, WelcomeView, reducer y hook
+│       └── register/  # RegisterForm, reducer y hook
 ├── App.tsx
 └── main.tsx         # Raíz de composición (inyección de dependencias)
 ```
@@ -73,5 +85,8 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
   en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
-  "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+- Fuera de alcance: recuperar contraseña, acceso con Google/Apple, texto de términos y
+  condiciones, persistencia de "Recordarme" y bloqueo por intentos fallidos. Al activarlos se
+  muestra un aviso (en el registro, una alerta "Próximamente").
+- La app usa rutas reales (`/login`, `/registro`): al desplegarla, el servidor debe responder
+  `index.html` en cualquier ruta (fallback SPA). `npm run dev` y `npm run preview` ya lo hacen.

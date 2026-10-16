@@ -1,0 +1,13 @@
+/* Mismo aspecto que la variante link de Button. */
+.link {
+  padding: 2px;
+  border-radius: 4px;
+  color: var(--brand-700);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
