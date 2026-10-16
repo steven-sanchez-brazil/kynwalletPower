@@ -13,6 +13,36 @@ function renderField(props: Partial<Parameters<typeof PasswordField>[0]> = {}) {
 }
 
 describe('PasswordField', () => {
+  it('REG-FR-020: distingue el control de confirmación y lo deshabilita durante envío', async () => {
+    const { rerender } = render(
+      <PasswordField
+        label="Confirmar contraseña"
+        toggleLabel="confirmación de contraseña"
+        value="secreto-123"
+        onChange={() => {}}
+      />,
+    );
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mostrar confirmación de contraseña' }),
+    );
+    expect(screen.getByLabelText('Confirmar contraseña')).toHaveAttribute('type', 'text');
+    expect(
+      screen.getByRole('button', { name: 'Ocultar confirmación de contraseña' }),
+    ).toHaveAttribute('aria-pressed', 'true');
+    rerender(
+      <PasswordField
+        label="Confirmar contraseña"
+        toggleLabel="confirmación de contraseña"
+        value="secreto-123"
+        onChange={() => {}}
+        disabled
+      />,
+    );
+    expect(
+      screen.getByRole('button', { name: 'Ocultar confirmación de contraseña' }),
+    ).toBeDisabled();
+  });
+
   it('US4-1: oculta por defecto y muestra al activar el control', async () => {
     const { input, toggle } = renderField();
     expect(input).toHaveAttribute('type', 'password');

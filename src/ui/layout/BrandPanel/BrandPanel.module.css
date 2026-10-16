@@ -7,6 +7,16 @@
   color: var(--neutral-0);
 }
 
+/* Registro muestra solo formulario en móvil y utiliza tokens con contraste AA. */
+.register {
+  display: none;
+  background: linear-gradient(121.19deg, var(--brand-700), var(--brand-800));
+}
+
+.register .subtitle {
+  color: var(--neutral-0);
+}
+
 .logo {
   display: flex;
   align-items: center;
@@ -29,6 +39,10 @@
 }
 
 @media (min-width: 960px) {
+  .register {
+    display: flex;
+  }
+
   .panel {
     flex-direction: column;
     align-items: flex-start;

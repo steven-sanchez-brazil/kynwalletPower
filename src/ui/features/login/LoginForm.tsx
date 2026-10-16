@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { Authenticate } from '@/application/authenticate';
 import { MESSAGES } from '@/domain/messages';
 import { Alert } from '@/ui/components/Alert/Alert';
@@ -8,19 +8,27 @@ import { Divider } from '@/ui/components/Divider/Divider';
 import { PasswordField } from '@/ui/components/PasswordField/PasswordField';
 import { SocialButton } from '@/ui/components/SocialButton/SocialButton';
 import { TextField } from '@/ui/components/TextField/TextField';
+import { NavigationLink } from '@/ui/components/NavigationLink/NavigationLink';
 import { useLoginForm } from './useLoginForm';
 import { WelcomeView } from './WelcomeView';
 import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  successMessage?: string;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, successMessage }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const [showSuccess, setShowSuccess] = useState(Boolean(successMessage));
+
+  useEffect(() => {
+    if (successMessage) headingRef.current?.focus();
+  }, [successMessage]);
 
   // US2-4: tras credenciales incorrectas, el foco vuelve a la contraseña.
   useEffect(() => {
@@ -33,6 +41,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setShowSuccess(false);
     const errors = submit();
     // US3-1: el foco va al primer campo con error.
     if (errors.email) emailRef.current?.focus();
@@ -45,9 +54,13 @@ export function LoginForm({ authenticate }: LoginFormProps) {
   return (
     <form className={styles.form} noValidate onSubmit={handleSubmit}>
       <div className={styles.heading}>
-        <h1 className={styles.title}>Bienvenido de nuevo</h1>
+        <h1 ref={headingRef} tabIndex={-1} className={styles.title}>
+          Bienvenido de nuevo
+        </h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
+
+      {showSuccess && <Alert tone="info">{successMessage}</Alert>}
 
       <TextField
         label="Correo electrónico"
@@ -108,9 +121,9 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <NavigationLink href="/register" className={styles.registerLink}>
           Regístrate
-        </Button>
+        </NavigationLink>
       </p>
     </form>
   );
