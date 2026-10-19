@@ -10,6 +10,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
+    fileParallelism: false,
+    isolate: false,
+    maxWorkers: 1,
     setupFiles: ['src/test/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },
     coverage: {

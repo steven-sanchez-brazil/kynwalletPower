@@ -15,9 +15,12 @@
   --brand-800: #b03b1b; /* hover del botón principal */
   --neutral-600: #73748b; /* 4.57:1: textos secundarios y placeholder */
   --neutral-border: #92949c; /* 3.03:1: bordes de controles */
-  --danger-600: #c62828; /* 5.62:1: mensajes de error */
+  --danger-600: #c62828; /* 5.62:1: mensajes de error y egresos */
   --danger-50: #fdecea;
+  --success-700: #166534; /* 7.13:1 sobre blanco: montos e indicadores de ingresos */
+  --success-50: #dcfce7;
   --neutral-50: #f4f5f9;
+  --surface-muted: #f4f5f9;
 
   /* Valores sin variable en Figma */
   --brand-gradient: linear-gradient(121.19deg, #ff8a65 0%, #ef5226 70.71%);

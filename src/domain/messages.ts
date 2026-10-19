@@ -8,4 +8,23 @@ export const MESSAGES = {
   INVALID_CREDENTIALS: 'Correo o contraseña incorrectos',
   UNAVAILABLE: 'Servicio de acceso no disponible. Intenta más tarde.',
   FEATURE_UNAVAILABLE: 'Función no disponible en esta demostración',
+  FULL_NAME_REQUIRED: 'Ingresa tus nombres completos',
+  FULL_NAME_TOO_LONG: 'Los nombres completos no pueden superar 80 caracteres',
+  PASSWORD_WEAK:
+    'La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y un carácter especial',
+  CONFIRM_PASSWORD_REQUIRED: 'Confirma tu contraseña',
+  CONFIRM_PASSWORD_MISMATCH: 'Las contraseñas no coinciden',
+  TERMS_REQUIRED: 'Debes aceptar los términos y condiciones',
+  EMAIL_ALREADY_EXISTS: 'Este correo electrónico ya está registrado',
+  REGISTRATION_STORAGE_ERROR:
+    'No se pudo completar el registro en este navegador. Verifica la configuración de almacenamiento.',
+  COMING_SOON: 'Próximamente',
+  OPERATION_DESCRIPTION_REQUIRED: 'Ingresa una descripción o destinatario',
+  OPERATION_DESCRIPTION_TOO_LONG: 'La descripción no puede superar 60 caracteres',
+  OPERATION_AMOUNT_INVALID: 'Ingresa un monto válido mayor a 0',
+  OPERATION_AMOUNT_TOO_HIGH: 'El monto supera el límite permitido',
+  INSUFFICIENT_BALANCE: 'Saldo insuficiente para realizar esta operación',
+  OPERATION_SUCCESS: 'Operación realizada con éxito',
+  ALIAS_COPIED: 'Datos copiados al portapapeles',
+  EMPTY_TRANSACTIONS: 'No se encontraron movimientos para los criterios seleccionados',
 } as const;

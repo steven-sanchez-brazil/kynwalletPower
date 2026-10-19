@@ -1,12 +1,14 @@
 import type { AuthGateway } from '@/application/ports/AuthGateway';
 import type { AuthResult, DemoAccount, LoginCredentials } from '@/domain/auth';
 import { normalizeEmail } from '@/domain/validation';
+import { loadRegisteredUsers } from './LocalStorageUserGateway';
+import { hashPassword } from './passwordHash';
 
 const DEFAULT_DELAY_MS = 1000;
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
-/** Autenticación simulada en memoria (contracts/auth-gateway.md, research.md R5). */
+/** Autenticación simulada en memoria y sobre registros de localStorage (contracts/auth-gateway.md, FR-012). */
 export class InMemoryAuthGateway implements AuthGateway {
   private readonly accounts: readonly DemoAccount[] | null;
   private readonly delayMs: number;
@@ -19,14 +21,31 @@ export class InMemoryAuthGateway implements AuthGateway {
   async authenticate(credentials: LoginCredentials): Promise<AuthResult> {
     await wait(this.delayMs);
     try {
-      if (!this.accounts) return { kind: 'unavailable' };
-      const email = normalizeEmail(credentials.email);
-      const account = this.accounts.find((candidate) => normalizeEmail(candidate.email) === email);
-      // Correo inexistente y contraseña incorrecta producen el mismo resultado (FR-010).
-      if (!account || account.password !== credentials.password) {
-        return { kind: 'invalid-credentials' };
+      const registeredUsers = loadRegisteredUsers();
+      if (!this.accounts && registeredUsers.length === 0) {
+        return { kind: 'unavailable' };
       }
-      return { kind: 'success', displayName: account.displayName };
+
+      const email = normalizeEmail(credentials.email);
+      const demoAccount = this.accounts?.find(
+        (candidate) => normalizeEmail(candidate.email) === email,
+      );
+      if (demoAccount && demoAccount.password === credentials.password) {
+        return { kind: 'success', displayName: demoAccount.displayName };
+      }
+
+      const registeredAccount = registeredUsers.find(
+        (candidate) => normalizeEmail(candidate.email) === email,
+      );
+      if (registeredAccount) {
+        const digest = await hashPassword(email, credentials.password);
+        if (registeredAccount.passwordDigest === digest) {
+          return { kind: 'success', displayName: registeredAccount.displayName };
+        }
+      }
+
+      // Correo inexistente y contraseña incorrecta producen el mismo resultado (FR-010).
+      return { kind: 'invalid-credentials' };
     } catch {
       return { kind: 'unavailable' };
     }

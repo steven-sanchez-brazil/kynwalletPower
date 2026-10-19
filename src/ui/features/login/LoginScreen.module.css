@@ -38,3 +38,22 @@
     grid-template-columns: 620px 1fr;
   }
 }
+
+.screen:has([data-view='home']) {
+  display: block;
+}
+
+.screen:has([data-view='home']) > aside {
+  display: none;
+}
+
+.screen:has([data-view='home']) .formPanel {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.screen:has([data-view='home']) .content {
+  max-width: none;
+  width: 100%;
+}

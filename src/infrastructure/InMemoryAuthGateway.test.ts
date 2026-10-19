@@ -1,9 +1,14 @@
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { InMemoryAuthGateway } from './InMemoryAuthGateway';
+import { LocalStorageUserGateway } from './LocalStorageUserGateway';
 
 const gateway = (accounts = [TEST_ACCOUNT]) => new InMemoryAuthGateway(accounts, { delayMs: 0 });
 
 describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
+  beforeEach(() => {
+    window.localStorage.clear();
+  });
+
   afterEach(() => {
     vi.useRealTimers();
   });
@@ -37,7 +42,7 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(unknown).toEqual(wrongPassword);
   });
 
-  it('C4: configuración ausente → unavailable', async () => {
+  it('C4: configuración ausente y sin usuarios registrados → unavailable', async () => {
     const result = await new InMemoryAuthGateway(null, { delayMs: 0 }).authenticate({
       email: TEST_ACCOUNT.email,
       password: TEST_ACCOUNT.password,
@@ -78,5 +83,27 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(onResolve).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
     expect(onResolve).toHaveBeenCalledOnce();
+  });
+
+  it('R5 / FR-012: autentica un usuario registrado en localStorage y rechaza contraseña incorrecta', async () => {
+    const userGateway = new LocalStorageUserGateway([TEST_ACCOUNT]);
+    await userGateway.register({
+      fullName: 'Ana Gómez',
+      email: 'ana.gomez@example.test',
+      password: 'KynWallet2026!',
+      acceptedTerms: true,
+    });
+
+    const success = await gateway().authenticate({
+      email: '  ANA.GOMEZ@example.test ',
+      password: 'KynWallet2026!',
+    });
+    expect(success).toEqual({ kind: 'success', displayName: 'Ana Gómez' });
+
+    const failure = await gateway().authenticate({
+      email: 'ana.gomez@example.test',
+      password: 'Incorrecta2026!',
+    });
+    expect(failure).toEqual({ kind: 'invalid-credentials' });
   });
 });
