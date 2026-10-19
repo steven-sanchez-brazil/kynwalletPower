@@ -1,0 +1,53 @@
+/* Figma `04 · Registro`: más compacto que el login para que entren cuatro campos (research.md R1). */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--neutral-600);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.termsLink {
+  padding: 0;
+  font-size: inherit;
+}
+
+.social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--neutral-600);
+}

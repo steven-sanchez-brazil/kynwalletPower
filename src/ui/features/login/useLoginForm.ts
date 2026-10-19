@@ -3,8 +3,12 @@ import type { Authenticate } from '@/application/authenticate';
 import { validateCredentials } from '@/domain/validation';
 import { initialLoginState, loginReducer, type Field, type FieldErrors } from './loginReducer';
 
-export function useLoginForm(authenticate: Authenticate) {
-  const [state, dispatch] = useReducer(loginReducer, initialLoginState);
+/** `initialNotice`: aviso que se muestra al entrar (p. ej., registro exitoso, 002 FR-013). */
+export function useLoginForm(authenticate: Authenticate, initialNotice?: string) {
+  const [state, dispatch] = useReducer(loginReducer, initialNotice, (notice) => ({
+    ...initialLoginState,
+    notice: notice ?? null,
+  }));
   const inFlight = useRef(false);
   const mounted = useRef(true);
 
