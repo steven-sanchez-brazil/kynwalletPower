@@ -1,0 +1,48 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--neutral-900);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 16px;
+  color: var(--neutral-600);
+}
+
+/* Texto resaltado como en el frame; no es un enlace porque la demo no tiene documento legal. */
+.highlight {
+  color: var(--brand-700);
+  font-weight: 600;
+}
+
+.social {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--neutral-600);
+}

@@ -1,7 +1,24 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .wrapper {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+}
+
+.box.invalid {
+  border-color: var(--danger-600);
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger-600);
 }
 
 .box {

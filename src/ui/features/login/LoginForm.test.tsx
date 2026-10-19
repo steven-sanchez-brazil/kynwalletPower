@@ -1,7 +1,10 @@
-import { act, render, screen } from '@testing-library/react';
+import { useState } from 'react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expectNoA11yViolations } from '@/test/a11y';
 import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
+import { renderWithRouter as render } from '@/test/renderWithRouter';
 import { LoginForm } from './LoginForm';
 
 function setup(stub = createAuthStub()) {
@@ -179,7 +182,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -194,6 +197,16 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       expect(stub.authenticate).not.toHaveBeenCalled();
     },
   );
+
+  it('REG FR-016: "Regístrate" es un enlace a /registro y ya no muestra el aviso', async () => {
+    const { user } = setup();
+    const link = screen.getByRole('link', { name: 'Regístrate' });
+    expect(link).toHaveAttribute('href', '/registro');
+    await user.click(link);
+    expect(
+      screen.queryByText('Función no disponible en esta demostración'),
+    ).not.toBeInTheDocument();
+  });
 
   it('US5-2: "Recordarme" cambia de estado sin escribir en el almacenamiento', async () => {
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
@@ -218,7 +231,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();
@@ -231,6 +244,47 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     await user.click(screen.getByRole('button', { name: 'Google' }));
     await submit();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+});
+
+function RegistrationNoticeHarness({ initial = true, onDismiss = () => {} }) {
+  const [visible, setVisible] = useState(initial);
+  return (
+    <LoginForm
+      authenticate={createAuthStub().authenticate}
+      registrationNotice={visible}
+      onRegistrationNoticeDismiss={() => {
+        onDismiss();
+        setVisible(false);
+      }}
+    />
+  );
+}
+
+describe('LoginForm · REG FR-009 aviso de registro exitoso', () => {
+  it('REG FR-009: muestra el aviso como estado anunciado', () => {
+    render(<RegistrationNoticeHarness />);
+    expect(screen.getByRole('status')).toHaveTextContent(
+      'Cuenta creada. Ya puedes iniciar sesión.',
+    );
+  });
+
+  it('REG FR-009: al enviar el formulario avisa para descartarlo y desaparece', async () => {
+    const onDismiss = vi.fn();
+    render(<RegistrationNoticeHarness onDismiss={onDismiss} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    expect(onDismiss).toHaveBeenCalledOnce();
+    expect(screen.queryByText('Cuenta creada. Ya puedes iniciar sesión.')).not.toBeInTheDocument();
+  });
+
+  it('REG FR-009: sin la propiedad no hay aviso', () => {
+    render(<LoginForm authenticate={createAuthStub().authenticate} />);
+    expect(screen.queryByText('Cuenta creada. Ya puedes iniciar sesión.')).not.toBeInTheDocument();
+  });
+
+  it('REG FR-012: con el aviso visible no tiene violaciones de accesibilidad', async () => {
+    const { container } = render(<RegistrationNoticeHarness />);
+    await expectNoA11yViolations(container);
   });
 });
 

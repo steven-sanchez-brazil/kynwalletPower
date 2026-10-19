@@ -11,6 +11,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['src/test/setup.ts'],
+    // jsdom arranca lento en equipos con antivirus o proxy; el valor por defecto (5 s) da falsos fallos.
+    testTimeout: 20000,
     css: { modules: { classNameStrategy: 'non-scoped' } },
     coverage: {
       provider: 'v8',

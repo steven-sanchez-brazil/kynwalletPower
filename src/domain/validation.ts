@@ -4,6 +4,7 @@ import { MESSAGES } from './messages';
 export const EMAIL_MAX_LENGTH = 254;
 export const PASSWORD_MIN_LENGTH = 8;
 export const PASSWORD_MAX_LENGTH = 128;
+export const DISPLAY_NAME_MAX_LENGTH = 80;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 export type CredentialErrors = Partial<Record<keyof LoginCredentials, string>>;
@@ -11,6 +12,16 @@ export type CredentialErrors = Partial<Record<keyof LoginCredentials, string>>;
 /** Normaliza un correo para validarlo y compararlo: sin espacios periféricos y en minúsculas. */
 export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
+}
+
+/** Normaliza el nombre de la cuenta: sin espacios periféricos. */
+export function normalizeDisplayName(name: string): string {
+  return name.trim();
+}
+
+export function isValidDisplayName(name: string): boolean {
+  const normalized = normalizeDisplayName(name);
+  return normalized.length >= 1 && normalized.length <= DISPLAY_NAME_MAX_LENGTH;
 }
 
 export function isValidEmail(email: string): boolean {
@@ -22,13 +33,13 @@ export function isValidPasswordLength(password: string): boolean {
   return password.length >= PASSWORD_MIN_LENGTH && password.length <= PASSWORD_MAX_LENGTH;
 }
 
-function validateEmail(email: string): string | undefined {
+export function validateEmail(email: string): string | undefined {
   if (normalizeEmail(email) === '') return MESSAGES.EMAIL_REQUIRED;
   if (!isValidEmail(email)) return MESSAGES.EMAIL_INVALID;
   return undefined;
 }
 
-function validatePassword(password: string): string | undefined {
+export function validatePassword(password: string): string | undefined {
   // La contraseña se valida sin recortar (FR-004).
   if (password === '') return MESSAGES.PASSWORD_REQUIRED;
   if (password.length < PASSWORD_MIN_LENGTH) return MESSAGES.PASSWORD_TOO_SHORT;

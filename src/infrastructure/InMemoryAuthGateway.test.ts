@@ -80,3 +80,103 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(onResolve).toHaveBeenCalledOnce();
   });
 });
+
+describe('InMemoryAuthGateway · registro (contracts/registration-gateway.md)', () => {
+  const NEW_ACCOUNT = {
+    email: 'nuevo@example.test',
+    password: 'nueva-clave-02',
+    displayName: 'Nuevo Usuario',
+  };
+  const login = (g: InMemoryAuthGateway, email: string, password: string) =>
+    g.authenticate({ email, password });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it('R1: correo nuevo → success y la cuenta puede iniciar sesión de inmediato', async () => {
+    const g = gateway();
+    await expect(g.register(NEW_ACCOUNT)).resolves.toEqual({ kind: 'success' });
+    await expect(login(g, NEW_ACCOUNT.email, NEW_ACCOUNT.password)).resolves.toEqual({
+      kind: 'success',
+      displayName: 'Nuevo Usuario',
+    });
+  });
+
+  it('R1: guarda el correo normalizado', async () => {
+    const g = gateway();
+    await g.register({ ...NEW_ACCOUNT, email: '  NUEVO@Example.test ' });
+    await expect(login(g, 'nuevo@example.test', NEW_ACCOUNT.password)).resolves.toMatchObject({
+      kind: 'success',
+    });
+  });
+
+  it('R2: correo existente con otra capitalización y espacios → duplicate-email sin alterar la cuenta', async () => {
+    const g = gateway();
+    const result = await g.register({
+      email: `  ${TEST_ACCOUNT.email.toUpperCase()} `,
+      password: 'otra-clave-99',
+      displayName: 'Intruso',
+    });
+    expect(result).toEqual({ kind: 'duplicate-email' });
+    await expect(login(g, TEST_ACCOUNT.email, TEST_ACCOUNT.password)).resolves.toEqual({
+      kind: 'success',
+      displayName: 'Steven Luna',
+    });
+    await expect(login(g, TEST_ACCOUNT.email, 'otra-clave-99')).resolves.toEqual({
+      kind: 'invalid-credentials',
+    });
+  });
+
+  it('R3: dos altas simultáneas del mismo correo → una success y una duplicate-email', async () => {
+    const g = gateway();
+    const results = await Promise.all([
+      g.register(NEW_ACCOUNT),
+      g.register({ ...NEW_ACCOUNT, password: 'segunda-clave-3' }),
+    ]);
+    expect(results.map((r) => r.kind).sort()).toEqual(['duplicate-email', 'success']);
+    await expect(login(g, NEW_ACCOUNT.email, NEW_ACCOUNT.password)).resolves.toMatchObject({
+      kind: 'success',
+    });
+  });
+
+  it('R4: colección null → unavailable y authenticate sigue en unavailable', async () => {
+    const g = new InMemoryAuthGateway(null, { delayMs: 0 });
+    await expect(g.register(NEW_ACCOUNT)).resolves.toEqual({ kind: 'unavailable' });
+    await expect(login(g, NEW_ACCOUNT.email, NEW_ACCOUNT.password)).resolves.toEqual({
+      kind: 'unavailable',
+    });
+  });
+
+  it('R5: las cuentas iniciales siguen autenticando tras varias altas', async () => {
+    const g = gateway();
+    await g.register(NEW_ACCOUNT);
+    await g.register({ ...NEW_ACCOUNT, email: 'otro@example.test' });
+    await expect(login(g, TEST_ACCOUNT.email, TEST_ACCOUNT.password)).resolves.toMatchObject({
+      kind: 'success',
+    });
+  });
+
+  it('R6: no muta el arreglo recibido en el constructor', async () => {
+    const initial = [TEST_ACCOUNT];
+    const g = new InMemoryAuthGateway(initial, { delayMs: 0 });
+    await g.register(NEW_ACCOUNT);
+    expect(initial).toEqual([TEST_ACCOUNT]);
+  });
+
+  it('R7: ningún resultado contiene la contraseña', async () => {
+    const g = gateway();
+    const results = [await g.register(NEW_ACCOUNT), await g.register(NEW_ACCOUNT)];
+    expect(JSON.stringify(results)).not.toContain(NEW_ACCOUNT.password);
+  });
+
+  it('R8: register espera delayMs (1000 ms por defecto) antes de responder', async () => {
+    vi.useFakeTimers();
+    const onResolve = vi.fn();
+    new InMemoryAuthGateway([TEST_ACCOUNT]).register(NEW_ACCOUNT).then(onResolve);
+    await vi.advanceTimersByTimeAsync(999);
+    expect(onResolve).not.toHaveBeenCalled();
+    await vi.advanceTimersByTimeAsync(1);
+    expect(onResolve).toHaveBeenCalledOnce();
+  });
+});

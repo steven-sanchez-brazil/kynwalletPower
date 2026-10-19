@@ -61,4 +61,21 @@ describe('PasswordField', () => {
     render(<PasswordField label="Contraseña" value="" onChange={() => {}} />);
     await expectNoA11yViolations(document.body);
   });
+
+  it('REG FR-012: visibilityLabel personaliza el nombre accesible del botón', async () => {
+    render(
+      <PasswordField
+        label="Confirmar contraseña"
+        value=""
+        onChange={() => {}}
+        visibilityLabel="confirmación de contraseña"
+      />,
+    );
+    await userEvent.click(
+      screen.getByRole('button', { name: 'Mostrar confirmación de contraseña' }),
+    );
+    expect(
+      screen.getByRole('button', { name: 'Ocultar confirmación de contraseña' }),
+    ).toHaveAttribute('aria-pressed', 'true');
+  });
 });

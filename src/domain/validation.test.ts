@@ -1,5 +1,11 @@
 import { MESSAGES } from './messages';
-import { normalizeEmail, validateCredentials } from './validation';
+import {
+  DISPLAY_NAME_MAX_LENGTH,
+  isValidDisplayName,
+  normalizeDisplayName,
+  normalizeEmail,
+  validateCredentials,
+} from './validation';
 
 describe('normalizeEmail', () => {
   it('US1-3: recorta espacios periféricos y convierte a minúsculas', () => {
@@ -60,5 +66,26 @@ describe('validateCredentials (data-model.md)', () => {
   it('la contraseña no se recorta: 7 caracteres + espacios cuenta los espacios', () => {
     expect(validateCredentials({ ...valid, password: ' 123456 ' })).toEqual({});
     expect(validateCredentials({ ...valid, password: '        ' })).toEqual({});
+  });
+});
+
+describe('nombre de la cuenta (REG FR-002)', () => {
+  it('REG FR-002: el límite es de 80 caracteres', () => {
+    expect(DISPLAY_NAME_MAX_LENGTH).toBe(80);
+  });
+
+  it('REG FR-002: normalizeDisplayName recorta espacios periféricos y respeta los interiores', () => {
+    expect(normalizeDisplayName('  Diego  Martínez ')).toBe('Diego  Martínez');
+  });
+
+  it.each([
+    ['1 carácter', 'D', true],
+    ['80 caracteres', 'a'.repeat(80), true],
+    ['80 caracteres con espacios periféricos', ` ${'a'.repeat(80)} `, true],
+    ['vacío', '', false],
+    ['solo espacios', '    ', false],
+    ['81 caracteres', 'a'.repeat(81), false],
+  ])('REG FR-002: isValidDisplayName (%s) → %s', (_label, name, expected) => {
+    expect(isValidDisplayName(name)).toBe(expected);
   });
 });
