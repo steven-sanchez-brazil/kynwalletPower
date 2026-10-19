@@ -8,4 +8,16 @@ export const MESSAGES = {
   INVALID_CREDENTIALS: 'Correo o contraseña incorrectos',
   UNAVAILABLE: 'Servicio de acceso no disponible. Intenta más tarde.',
   FEATURE_UNAVAILABLE: 'Función no disponible en esta demostración',
+
+  // Registro (002)
+  FULL_NAME_REQUIRED: 'Ingresa tu nombre completo',
+  FULL_NAME_INVALID: 'Ingresa un nombre válido (solo letras y espacios)',
+  CONFIRM_PASSWORD_REQUIRED: 'Confirma tu contraseña',
+  PASSWORDS_DO_NOT_MATCH: 'Las contraseñas no coinciden',
+  TERMS_REQUIRED: 'Debes aceptar los términos y condiciones',
+  EMAIL_TAKEN:
+    'No pudimos crear la cuenta con este correo. Si ya tienes una cuenta, inicia sesión.',
+  REGISTRATION_UNAVAILABLE: 'Servicio de registro no disponible. Intenta más tarde.',
+  REGISTRATION_SUCCESS: '¡Cuenta creada con éxito! Inicia sesión para continuar.',
+  COMING_SOON: 'Próximamente',
 } as const;

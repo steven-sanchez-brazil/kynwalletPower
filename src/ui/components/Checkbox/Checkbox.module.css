@@ -1,3 +1,9 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .wrapper {
   display: inline-flex;
   align-items: center;
@@ -36,9 +42,20 @@
   opacity: 1;
 }
 
+.invalid {
+  border-color: var(--danger-600);
+}
+
 .label {
   font-size: 14px;
   font-weight: 500;
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger-600);
 }

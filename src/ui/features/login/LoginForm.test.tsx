@@ -179,7 +179,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -218,7 +218,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();
@@ -230,6 +230,32 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     const { user, submit } = setup();
     await user.click(screen.getByRole('button', { name: 'Google' }));
     await submit();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+  });
+});
+
+describe('LoginForm · integración con el registro (002)', () => {
+  it('002 US3-2: "Regístrate" es un enlace a /registro', () => {
+    setup();
+    expect(screen.getByRole('link', { name: 'Regístrate' })).toHaveAttribute('href', '/registro');
+  });
+
+  it('002 FR-013: muestra el aviso inicial de registro exitoso', () => {
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        initialNotice="¡Cuenta creada con éxito! Inicia sesión para continuar."
+      />,
+    );
+    expect(screen.getByRole('status')).toHaveTextContent(
+      '¡Cuenta creada con éxito! Inicia sesión para continuar.',
+    );
+  });
+
+  it('002 US1-5: el aviso de registro desaparece al enviar el login', async () => {
+    const user = userEvent.setup();
+    render(<LoginForm authenticate={createAuthStub().authenticate} initialNotice="Aviso" />);
+    await user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
 });
