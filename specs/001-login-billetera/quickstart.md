@@ -4,7 +4,7 @@ Guía para ejecutar la demo localmente y validar la funcionalidad de punta a pun
 
 ## Prerrequisitos
 
-- Node.js 20 LTS o superior y npm 10 o superior.
+- Node.js `^20.19.0 || >=22.12.0` (requisito de Vite 8) y npm 10 o superior.
 
 ## Configuración
 

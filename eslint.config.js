@@ -41,4 +41,10 @@ export default tseslint.config(
     files: ['src/ui/**'],
     rules: layer(['@/infrastructure/*'], 'La UI no depende de la infraestructura.'),
   },
+  // Único adaptador autorizado a escribir en la consola (Constitución 5.5 y 8.7):
+  // emite eventos de diagnóstico estructurados sin datos sensibles.
+  {
+    files: ['src/infrastructure/consoleDiagnostics.ts'],
+    rules: { 'no-console': 'off' },
+  },
 );

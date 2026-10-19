@@ -1,7 +1,11 @@
 import type { DemoAccount } from '@/domain/auth';
-import { isValidEmail, isValidPasswordLength, normalizeEmail } from '@/domain/validation';
-
-const DISPLAY_NAME_MAX_LENGTH = 80;
+import {
+  isValidDisplayName,
+  isValidEmail,
+  isValidPasswordLength,
+  normalizeDisplayName,
+  normalizeEmail,
+} from '@/domain/validation';
 
 function toAccount(value: unknown): DemoAccount | null {
   if (typeof value !== 'object' || value === null) return null;
@@ -9,11 +13,19 @@ function toAccount(value: unknown): DemoAccount | null {
   if (typeof email !== 'string' || typeof password !== 'string') return null;
   if (typeof displayName !== 'string') return null;
 
-  const name = displayName.trim();
-  const validName = name.length >= 1 && name.length <= DISPLAY_NAME_MAX_LENGTH;
-  if (!isValidEmail(email) || !isValidPasswordLength(password) || !validName) return null;
+  if (
+    !isValidEmail(email) ||
+    !isValidPasswordLength(password) ||
+    !isValidDisplayName(displayName)
+  ) {
+    return null;
+  }
 
-  return { email: normalizeEmail(email), password, displayName: name };
+  return {
+    email: normalizeEmail(email),
+    password,
+    displayName: normalizeDisplayName(displayName),
+  };
 }
 
 /**

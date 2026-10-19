@@ -8,15 +8,23 @@ import { Divider } from '@/ui/components/Divider/Divider';
 import { PasswordField } from '@/ui/components/PasswordField/PasswordField';
 import { SocialButton } from '@/ui/components/SocialButton/SocialButton';
 import { TextField } from '@/ui/components/TextField/TextField';
+import { TextLink } from '@/ui/components/TextLink/TextLink';
 import { useLoginForm } from './useLoginForm';
 import { WelcomeView } from './WelcomeView';
 import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  /** Muestra el aviso de registro exitoso (spec 002, FR-009). */
+  registrationNotice?: boolean;
+  onRegistrationNoticeDismiss?: () => void;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({
+  authenticate,
+  registrationNotice = false,
+  onRegistrationNoticeDismiss,
+}: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -33,6 +41,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    onRegistrationNoticeDismiss?.();
     const errors = submit();
     // US3-1: el foco va al primer campo con error.
     if (errors.email) emailRef.current?.focus();
@@ -48,6 +57,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         <h1 className={styles.title}>Bienvenido de nuevo</h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
+
+      {registrationNotice && <Alert tone="info">{MESSAGES.REGISTER_SUCCESS}</Alert>}
 
       <TextField
         label="Correo electrónico"
@@ -108,9 +119,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
-          Regístrate
-        </Button>
+        <TextLink to="/registro">Regístrate</TextLink>
       </p>
     </form>
   );
