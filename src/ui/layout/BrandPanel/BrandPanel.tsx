@@ -1,26 +1,24 @@
 import logoMark from '@/ui/assets/logo-mark.svg';
 import styles from './BrandPanel.module.css';
 
-/** Panel de marca del diseño (Figma, nodo 2:3). */
-export function BrandPanel() {
+/** Panel de marca compartido entre inicio de sesión y registro. */
+export function BrandPanel({ registration = false }: { registration?: boolean }) {
   return (
     <header className={styles.panel}>
       <div className={styles.logo}>
         <img src={logoMark} alt="" width={20} height={44} />
         <span className={styles.logoText}>KynWallet</span>
       </div>
-
       <div className={styles.headline}>
         <p className={styles.title}>
-          Tu dinero,
-          <br />
-          sin fronteras.
+          {registration ? <>Comienza tu<br />camino financiero.</> : <>Tu dinero,<br />sin fronteras.</>}
         </p>
         <p className={styles.subtitle}>
-          Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.
+          {registration
+            ? 'Crea tu cuenta y empieza a manejar tu dinero, recibir y enviar sin límites.'
+            : 'Envía, recibe y paga en segundos. Una billetera pensada para tu día a día.'}
         </p>
       </div>
-
       <div className={styles.card} aria-hidden="true">
         <div className={styles.cardTop}>
           <span className={styles.cardName}>Kyn Card</span>
