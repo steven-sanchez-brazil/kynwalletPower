@@ -1,3 +1,4 @@
+import { followLocalLink } from '@/ui/navigation/link';
 import { useEffect, useRef, type FormEvent } from 'react';
 import type { Authenticate } from '@/application/authenticate';
 import { MESSAGES } from '@/domain/messages';
@@ -14,9 +15,10 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  onRegister: () => void;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, onRegister }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -108,9 +110,13 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <a
+          className={styles.link}
+          href="/register"
+          onClick={(event) => followLocalLink(event, onRegister)}
+        >
           Regístrate
-        </Button>
+        </a>
       </p>
     </form>
   );

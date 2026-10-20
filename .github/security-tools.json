@@ -1,0 +1,9 @@
+{
+  "version": "1.177.0",
+  "image": "semgrep/semgrep:1.177.0@sha256:acaac22ffc7b7cc5926de0751b223bce0b2491c33d18422fa72f632c78d81198",
+  "verified": "2026-10-20",
+  "source": "https://hub.docker.com/v2/repositories/semgrep/semgrep/tags/1.177.0",
+  "license": "LGPL-2.1; CLI aislada, no enlazada ni distribuida con la aplicación; validar política corporativa antes de integración",
+  "knownLimitation": "No confiar solo en exit code: comprobar JSON errors/results/inventario; métricas remotas desactivadas.",
+  "rules": "Reglas locales originales del proyecto; sin descarga mutable."
+}

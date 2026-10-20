@@ -1,3 +1,7 @@
+import { createRegister } from '@/application/register';
+import { LocalRegistrationSimulation } from '@/infrastructure/LocalRegistrationSimulation';
+import { InMemoryRegistrationDiagnostics } from '@/infrastructure/InMemoryRegistrationDiagnostics';
+import { createBrowserNavigation } from '@/ui/navigation/browserNavigation';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createAuthenticate } from '@/application/authenticate';
@@ -15,7 +19,14 @@ const root = document.getElementById('root');
 if (root) {
   createRoot(root).render(
     <StrictMode>
-      <App authenticate={authenticate} />
+      <App
+        authenticate={authenticate}
+        register={createRegister(
+          new LocalRegistrationSimulation(),
+          new InMemoryRegistrationDiagnostics(),
+        )}
+        navigation={createBrowserNavigation()}
+      />
     </StrictMode>,
   );
 }

@@ -6,3 +6,6 @@ specs
 .specify
 .claude
 package-lock.json
+artifacts
+.agents
+tests/security/sast-fixtures

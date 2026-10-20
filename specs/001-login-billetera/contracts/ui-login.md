@@ -46,3 +46,7 @@ Logo "KynWallet", titular "Tu dinero, sin fronteras.", texto de apoyo y la tarje
 Orden de tabulación: correo → contraseña → visibilidad → recordarme → recuperar contraseña →
 iniciar sesión → Google → Apple → regístrate. Enter en cualquier campo envía el formulario.
 El foco siempre es visible (anillo de 2px con contraste ≥ 3:1).
+
+## Cambio 002: entrada al registro
+
+El enlace Regístrate tiene href=/register e invoca navegación de la aplicación para activación ordinaria; click modificado mantiene comportamiento nativo. Sustituye únicamente el placeholder anterior de esa acción, por 002/FR-019 y AC-403. Google, Apple y recuperación del login mantienen sus avisos existentes. El login puede mostrar el aviso transitorio de registro exitoso sin recibir datos del formulario. Detalle: [contrato de registro](../../002-registro-usuarios/contracts/ui-registration.md).

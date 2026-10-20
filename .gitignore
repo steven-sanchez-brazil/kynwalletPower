@@ -27,3 +27,6 @@ CLAUDE.md
 .copilot/
 .cursor/
 .kiro/
+.env.*
+!.env.example
+artifacts/

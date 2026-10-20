@@ -38,3 +38,27 @@
     grid-template-columns: 620px 1fr;
   }
 }
+.brand {
+  display: contents;
+}
+.formPanel {
+  min-width: 0;
+}
+.registration {
+  display: block;
+}
+.registration .brand {
+  display: none;
+}
+.registration .formPanel {
+  min-height: 100dvh;
+}
+@media (min-width: 1024px) {
+  .registration {
+    display: grid;
+    grid-template-columns: 43% minmax(0, 1fr);
+  }
+  .registration .brand {
+    display: contents;
+  }
+}

@@ -1,6 +1,6 @@
-# KynWallet · Inicio de sesión (demo)
+# KynWallet · Acceso y registro (demo)
 
-Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
+Demostración funcional, solo del lado del cliente, de las pantallas de inicio de sesión y registro de la
 billetera virtual KynWallet. Reproduce el diseño de Figma
 ([01 · Login](https://www.figma.com/design/f7uDsv8sh6ZOtK2OitTqtg/Billetera-Virtual---Prototipos?node-id=2-2)),
 valida los campos y simula la autenticación contra cuentas ficticias, sin backend ni base de datos.
@@ -73,5 +73,17 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
   en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
+- Fuera de alcance: recuperar contraseña, acceso real con Google/Apple, persistencia de
   "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+
+## Registro de demostración
+
+Desde el login, «Regístrate» abre /register. El formulario exige nombre, correo, contraseña/confirmación y aceptación. Valida inline, conserva datos durante corrección, cancela al salir y vuelve a /login con confirmación. No crea cuentas ni habilita credenciales; la autenticación de las cuentas ficticias existentes permanece igual antes/después (002/FR-011, AC-105).
+
+En registro, Google y Apple muestran «Próximamente». El enlace Inicia sesión vuelve sin éxito. Las rutas /login y /register requieren fallback SPA a index.html en el alojamiento; Vite dev/preview lo ofrecen para validación local. Registro móvil solo muestra formulario; desde 1024 px muestra marca y formulario.
+
+Especificación y trazabilidad: [registro](specs/002-registro-usuarios/spec.md), [tareas](specs/002-registro-usuarios/tasks.md) y [evidencia](specs/002-registro-usuarios/validation.md). El registro de demostración no requiere configurar cuentas.
+
+### Contraste del panel compartido
+
+La revisión real de registro de 2026-10-20 detectó contraste insuficiente sobre el gradiente original: texto de apoyo blanco al 85 % daba ratios 2.05:1–2.95:1. Se reutilizan --brand-700/800 para el gradiente y blanco opaco en el texto de apoyo, en login y registro para conservar coherencia y cumplir AA. El pendiente de aprobación de diseño mencionado arriba incluye este ajuste; no se afirma una aprobación no recibida. Evidencia y revisión en specs/002-registro-usuarios/validation.md.

@@ -13,8 +13,13 @@ export function normalizeEmail(email: string): string {
   return email.trim().toLowerCase();
 }
 
-export function isValidEmail(email: string): boolean {
+export function isValidEmail(email: string, profile: 'login' | 'registration' = 'login'): boolean {
   const normalized = normalizeEmail(email);
+  if (profile === 'registration')
+    return (
+      Array.from(normalized).length <= EMAIL_MAX_LENGTH &&
+      /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/.test(normalized)
+    );
   return normalized.length <= EMAIL_MAX_LENGTH && EMAIL_PATTERN.test(normalized);
 }
 
