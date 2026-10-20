@@ -14,9 +14,20 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  /** Navega a la pantalla de registro (FR-020). */
+  onRegister: () => void;
+  /** Mensaje de éxito mostrado tras un registro (FR-013). */
+  successMessage?: string;
+  /** Se invoca cuando la persona interactúa con el login y el mensaje debe descartarse. */
+  onDismissSuccess?: () => void;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({
+  authenticate,
+  onRegister,
+  successMessage,
+  onDismissSuccess,
+}: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -33,6 +44,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    onDismissSuccess?.();
     const errors = submit();
     // US3-1: el foco va al primer campo con error.
     if (errors.email) emailRef.current?.focus();
@@ -58,7 +70,10 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         placeholder="tucorreo@ejemplo.com"
         value={state.values.email}
         error={state.fieldErrors.email}
-        onChange={(event) => change('email', event.target.value)}
+        onChange={(event) => {
+          onDismissSuccess?.();
+          change('email', event.target.value);
+        }}
         onBlur={() => blur('email')}
       />
 
@@ -70,7 +85,10 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         placeholder="••••••••"
         value={state.values.password}
         error={state.fieldErrors.password}
-        onChange={(event) => change('password', event.target.value)}
+        onChange={(event) => {
+          onDismissSuccess?.();
+          change('password', event.target.value);
+        }}
         onBlur={() => blur('password')}
       />
 
@@ -80,6 +98,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
           ¿Olvidaste tu contraseña?
         </Button>
       </div>
+
+      {successMessage && <Alert tone="success">{successMessage}</Alert>}
 
       {state.authError && (
         <Alert tone="error">
@@ -108,7 +128,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <Button variant="link" onClick={onRegister}>
           Regístrate
         </Button>
       </p>

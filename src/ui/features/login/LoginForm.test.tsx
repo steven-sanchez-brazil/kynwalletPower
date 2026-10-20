@@ -1,16 +1,18 @@
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { expectNoA11yViolations } from '@/test/a11y';
 import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { LoginForm } from './LoginForm';
 
 function setup(stub = createAuthStub()) {
   const user = userEvent.setup();
-  render(<LoginForm authenticate={stub.authenticate} />);
+  const onRegister = vi.fn();
+  render(<LoginForm authenticate={stub.authenticate} onRegister={onRegister} />);
   const email = screen.getByLabelText('Correo electrónico');
   const password = screen.getByLabelText('Contraseña');
   const submit = () => user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
-  return { user, stub, email, password, submit };
+  return { user, stub, onRegister, email, password, submit };
 }
 
 describe('LoginForm · US1 Iniciar sesión con credenciales válidas', () => {
@@ -179,7 +181,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -194,6 +196,14 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       expect(stub.authenticate).not.toHaveBeenCalled();
     },
   );
+
+  it('FR-020: "Regístrate" navega al registro y ya no muestra el aviso de función no disponible', async () => {
+    const { user, onRegister, stub } = setup();
+    await user.click(screen.getByRole('button', { name: 'Regístrate' }));
+    expect(onRegister).toHaveBeenCalledOnce();
+    expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    expect(stub.authenticate).not.toHaveBeenCalled();
+  });
 
   it('US5-2: "Recordarme" cambia de estado sin escribir en el almacenamiento', async () => {
     const setItem = vi.spyOn(Storage.prototype, 'setItem');
@@ -260,5 +270,58 @@ describe('LoginForm · seguridad (FR-012)', () => {
 
     setItem.mockRestore();
     consoleSpies.forEach((spy) => spy.mockRestore());
+  });
+});
+
+describe('LoginForm · mensaje de éxito tras el registro (FR-013, UI-8)', () => {
+  const message = '¡Cuenta creada, Diego! Ahora puedes iniciar sesión.';
+
+  function setupWithMessage() {
+    const user = userEvent.setup();
+    const onDismissSuccess = vi.fn();
+    const stub = createAuthStub();
+    render(
+      <LoginForm
+        authenticate={stub.authenticate}
+        onRegister={() => {}}
+        successMessage={message}
+        onDismissSuccess={onDismissSuccess}
+      />,
+    );
+    return { user, onDismissSuccess, stub };
+  }
+
+  it('FR-013: muestra el mensaje de éxito anunciado como estado', () => {
+    setupWithMessage();
+    expect(screen.getByRole('status')).toHaveTextContent(message);
+  });
+
+  it('FR-013: sin la prop no se muestra ningún mensaje de éxito', () => {
+    render(<LoginForm authenticate={createAuthStub().authenticate} onRegister={() => {}} />);
+    expect(screen.queryByText(/Cuenta creada/)).not.toBeInTheDocument();
+  });
+
+  it('US1-5: escribir en un campo avisa para descartar el mensaje', async () => {
+    const { user, onDismissSuccess } = setupWithMessage();
+    await user.type(screen.getByLabelText('Correo electrónico'), 'a');
+    expect(onDismissSuccess).toHaveBeenCalled();
+  });
+
+  it('US1-5: enviar el formulario avisa para descartar el mensaje', async () => {
+    const { user, onDismissSuccess } = setupWithMessage();
+    await user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    expect(onDismissSuccess).toHaveBeenCalled();
+  });
+
+  it('UI-12: sin violaciones de accesibilidad con el mensaje visible', async () => {
+    const { container } = render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        onRegister={() => {}}
+        successMessage={message}
+        onDismissSuccess={() => {}}
+      />,
+    );
+    await expectNoA11yViolations(container);
   });
 });

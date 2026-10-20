@@ -17,4 +17,10 @@ describe('Alert', () => {
     const { container } = render(<Alert tone="error">Falló</Alert>);
     await expectNoA11yViolations(container);
   });
+
+  it('FR-013: tone="success" usa role="status" y no tiene violaciones de accesibilidad', async () => {
+    const { container } = render(<Alert tone="success">¡Cuenta creada!</Alert>);
+    expect(screen.getByRole('status')).toHaveTextContent('¡Cuenta creada!');
+    await expectNoA11yViolations(container);
+  });
 });
