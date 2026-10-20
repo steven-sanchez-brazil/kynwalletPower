@@ -38,3 +38,9 @@
     grid-template-columns: 620px 1fr;
   }
 }
+
+/* El registro móvil debe mostrar únicamente el formulario. */
+.registration > header { display: none; }
+@media (min-width: 960px) {
+  .registration > header { display: flex; }
+}
