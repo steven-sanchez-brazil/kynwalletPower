@@ -23,12 +23,58 @@
   font-weight: 700;
 }
 
+.logoRegister {
+  position: relative;
+  width: 150px;
+  height: 34px;
+}
+
+.dot,
+.dot2 {
+  position: absolute;
+  display: block;
+}
+
+.dot {
+  top: 0;
+  left: 0;
+}
+
+.dot2 {
+  top: 12px;
+  left: 4px;
+}
+
+.logoRegisterText {
+  position: absolute;
+  top: 6px;
+  left: 22px;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 31px;
+}
+
+/* Registro en móvil: solo se muestra el formulario (research.md R6). */
+.panel[data-tone='register'] {
+  display: none;
+}
+
 .headline,
 .card {
   display: none;
 }
 
 @media (min-width: 960px) {
+  .panel[data-tone='register'] {
+    display: flex;
+    background: var(--brand-gradient-register);
+  }
+
+  /* Figma 31:2 coloca el titular en y=400 (con space-between caería en y≈343): 114px de margen lo desplazan 57px. */
+  .panel[data-tone='register'] .headline {
+    margin-top: 114px;
+  }
+
   .panel {
     flex-direction: column;
     align-items: flex-start;

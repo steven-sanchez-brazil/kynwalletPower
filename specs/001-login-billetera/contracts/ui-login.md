@@ -16,7 +16,7 @@ Textos exactos en español, tal como figuran en el diseño de Figma (nodo `2:2`)
 | Enviar | `button` "Iniciar sesión" | En carga: `aria-busy=true`, deshabilitado, texto "Iniciando sesión…" |
 | Separador | texto "o continúa con" | Decorativo |
 | Google / Apple | `button` "Google", `button` "Apple" | Muestran el aviso |
-| Registro | `button` "Regístrate" precedido por "¿No tienes cuenta?" | Muestra el aviso |
+| Registro | `button` "Regístrate" precedido por "¿No tienes cuenta?" | **Modificado por 002:** navega a `/registro` (ya no muestra el aviso). Ver `specs/002-registro-billetera/contracts/ui-register.md` |
 
 **Errores por campo**: texto bajo el campo, vinculado con `aria-describedby`; el campo lleva
 `aria-invalid=true`.
@@ -28,6 +28,11 @@ Textos exactos en español, tal como figuran en el diseño de Figma (nodo `2:2`)
 | Credenciales incorrectas | `alert` | "Correo o contraseña incorrectos" |
 | No disponible | `alert` | "Servicio de acceso no disponible. Intenta más tarde." |
 | Función fuera de alcance | `status` | "Función no disponible en esta demostración" |
+
+**Mensaje de éxito (añadido por 002)**: si se llega desde un registro exitoso, el login muestra
+sobre el botón un `Alert` de tono éxito (`status`) con "¡Cuenta creada, {nombre}! Ahora puedes
+iniciar sesión."; desaparece al escribir o enviar y no persiste al recargar. El login vive en la
+dirección `/login`.
 
 ## Vista de bienvenida
 
