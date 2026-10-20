@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import type { Authenticate } from '@/application/authenticate';
 import { MESSAGES } from '@/domain/messages';
 import { Alert } from '@/ui/components/Alert/Alert';
@@ -14,13 +14,35 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  onNavigateToRegister?: () => void;
+  initialEmail?: string;
+  registrationSuccessNotice?: string | null;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
-  const { state, change, blur, submit, logout, toggleRemember, showNotice } =
-    useLoginForm(authenticate);
+export function LoginForm({
+  authenticate,
+  onNavigateToRegister,
+  initialEmail,
+  registrationSuccessNotice,
+}: LoginFormProps) {
+  const { state, change, blur, submit, logout, toggleRemember, showNotice } = useLoginForm(
+    authenticate,
+    initialEmail,
+  );
+  const [dismissedNotice, setDismissedNotice] = useState<string | null>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const successNotice =
+    registrationSuccessNotice && registrationSuccessNotice !== dismissedNotice
+      ? registrationSuccessNotice
+      : null;
+
+  const dismissSuccessNotice = () => {
+    if (registrationSuccessNotice) {
+      setDismissedNotice(registrationSuccessNotice);
+    }
+  };
 
   // US2-4: tras credenciales incorrectas, el foco vuelve a la contraseña.
   useEffect(() => {
@@ -33,6 +55,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    dismissSuccessNotice();
     const errors = submit();
     // US3-1: el foco va al primer campo con error.
     if (errors.email) emailRef.current?.focus();
@@ -49,6 +72,12 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
 
+      {successNotice && (
+        <Alert tone="info" role="alert">
+          {successNotice}
+        </Alert>
+      )}
+
       <TextField
         label="Correo electrónico"
         ref={emailRef}
@@ -58,7 +87,10 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         placeholder="tucorreo@ejemplo.com"
         value={state.values.email}
         error={state.fieldErrors.email}
-        onChange={(event) => change('email', event.target.value)}
+        onChange={(event) => {
+          dismissSuccessNotice();
+          change('email', event.target.value);
+        }}
         onBlur={() => blur('email')}
       />
 
@@ -70,7 +102,10 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         placeholder="••••••••"
         value={state.values.password}
         error={state.fieldErrors.password}
-        onChange={(event) => change('password', event.target.value)}
+        onChange={(event) => {
+          dismissSuccessNotice();
+          change('password', event.target.value);
+        }}
         onBlur={() => blur('password')}
       />
 
@@ -108,7 +143,7 @@ export function LoginForm({ authenticate }: LoginFormProps) {
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <Button variant="link" onClick={onNavigateToRegister ?? notAvailable}>
           Regístrate
         </Button>
       </p>

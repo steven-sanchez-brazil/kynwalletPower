@@ -3,8 +3,14 @@ import type { Authenticate } from '@/application/authenticate';
 import { validateCredentials } from '@/domain/validation';
 import { initialLoginState, loginReducer, type Field, type FieldErrors } from './loginReducer';
 
-export function useLoginForm(authenticate: Authenticate) {
-  const [state, dispatch] = useReducer(loginReducer, initialLoginState);
+export function useLoginForm(authenticate: Authenticate, initialEmail: string = '') {
+  const [state, dispatch] = useReducer(loginReducer, {
+    ...initialLoginState,
+    values: {
+      ...initialLoginState.values,
+      email: initialEmail,
+    },
+  });
   const inFlight = useRef(false);
   const mounted = useRef(true);
 

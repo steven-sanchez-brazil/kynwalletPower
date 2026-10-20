@@ -1,4 +1,5 @@
 import { TEST_ACCOUNT } from '@/test/fixtures';
+import { InMemoryAccountStore } from './InMemoryAccountStore';
 import { InMemoryAuthGateway } from './InMemoryAuthGateway';
 
 const gateway = (accounts = [TEST_ACCOUNT]) => new InMemoryAuthGateway(accounts, { delayMs: 0 });
@@ -78,5 +79,23 @@ describe('InMemoryAuthGateway (contracts/auth-gateway.md)', () => {
     expect(onResolve).not.toHaveBeenCalled();
     await vi.advanceTimersByTimeAsync(1);
     expect(onResolve).toHaveBeenCalledOnce();
+  });
+
+  it('permite autenticar cuentas agregadas dinámicamente al AccountStore', async () => {
+    const store = new InMemoryAccountStore([TEST_ACCOUNT]);
+    const authGateway = new InMemoryAuthGateway(store, { delayMs: 0 });
+
+    store.saveAccount({
+      email: 'carlos@example.test',
+      password: 'Password123!',
+      displayName: 'Carlos Mendoza',
+    });
+
+    const result = await authGateway.authenticate({
+      email: 'carlos@example.test',
+      password: 'Password123!',
+    });
+
+    expect(result).toEqual({ kind: 'success', displayName: 'Carlos Mendoza' });
   });
 });

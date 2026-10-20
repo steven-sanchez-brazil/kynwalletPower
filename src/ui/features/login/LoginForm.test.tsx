@@ -232,6 +232,49 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
     await submit();
     expect(screen.queryByRole('status')).not.toBeInTheDocument();
   });
+
+  it('US4-1: enlace "Regístrate" invoca onNavigateToRegister cuando se proporciona', async () => {
+    const onNavigateToRegister = vi.fn();
+    const user = userEvent.setup();
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        onNavigateToRegister={onNavigateToRegister}
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: 'Regístrate' }));
+    expect(onNavigateToRegister).toHaveBeenCalledOnce();
+  });
+});
+
+describe('LoginForm · Alerta de registro exitoso (FR-012)', () => {
+  it('muestra la alerta de registro exitoso cuando se provee registrationSuccessNotice', async () => {
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        registrationSuccessNotice="¡Registro exitoso! Ya puedes iniciar sesión"
+      />,
+    );
+    expect(screen.getByRole('alert')).toHaveTextContent(
+      '¡Registro exitoso! Ya puedes iniciar sesión',
+    );
+  });
+
+  it('la alerta de registro exitoso se oculta al enviar el formulario', async () => {
+    const user = userEvent.setup();
+    render(
+      <LoginForm
+        authenticate={createAuthStub().authenticate}
+        registrationSuccessNotice="¡Registro exitoso! Ya puedes iniciar sesión"
+      />,
+    );
+    expect(screen.getByRole('alert')).toBeInTheDocument();
+    await user.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    // Al intentar enviar con errores, el foco va al email y la alerta de registro se remueve
+    expect(
+      screen.queryByText('¡Registro exitoso! Ya puedes iniciar sesión'),
+    ).not.toBeInTheDocument();
+  });
 });
 
 describe('LoginForm · seguridad (FR-012)', () => {

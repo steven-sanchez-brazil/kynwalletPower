@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .wrapper {
   display: inline-flex;
   align-items: center;
@@ -15,6 +21,10 @@
   background: var(--neutral-0);
   appearance: none;
   cursor: pointer;
+}
+
+.box.invalid {
+  border-color: var(--danger-600);
 }
 
 .box::after {
@@ -41,4 +51,10 @@
   font-weight: 500;
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--danger-600);
 }
