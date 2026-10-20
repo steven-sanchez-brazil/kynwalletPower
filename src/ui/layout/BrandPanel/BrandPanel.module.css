@@ -7,6 +7,10 @@
   color: var(--neutral-0);
 }
 
+.registration {
+  background: var(--registration-gradient);
+}
+
 .logo {
   display: flex;
   align-items: center;

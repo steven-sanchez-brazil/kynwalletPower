@@ -42,3 +42,15 @@
   color: var(--neutral-700);
   cursor: pointer;
 }
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger-600);
+}

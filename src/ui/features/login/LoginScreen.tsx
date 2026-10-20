@@ -1,14 +1,6 @@
 import type { ReactNode } from 'react';
-import { BrandPanel } from '@/ui/layout/BrandPanel/BrandPanel';
-import styles from './LoginScreen.module.css';
+import { AuthScreen } from '@/ui/layout/AuthScreen/AuthScreen';
 
 export function LoginScreen({ children }: { children: ReactNode }) {
-  return (
-    <div className={styles.screen}>
-      <BrandPanel />
-      <main className={styles.formPanel}>
-        <div className={styles.content}>{children}</div>
-      </main>
-    </div>
-  );
+  return <AuthScreen>{children}</AuthScreen>;
 }

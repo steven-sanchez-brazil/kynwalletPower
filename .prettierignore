@@ -5,4 +5,5 @@ coverage
 specs
 .specify
 .claude
+.agents
 package-lock.json

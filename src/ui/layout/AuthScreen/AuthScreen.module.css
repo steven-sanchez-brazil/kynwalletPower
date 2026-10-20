@@ -1,0 +1,51 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100dvh;
+  min-width: 0;
+}
+
+.formPanel {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  background: var(--neutral-0);
+}
+
+.content {
+  width: 100%;
+  max-width: min(400px, 100%);
+  min-width: 0;
+}
+
+@media (max-width: 479px) {
+  .formPanel {
+    align-items: flex-start;
+    padding: 32px 16px;
+  }
+}
+
+@media (min-width: 960px) {
+  .screen {
+    display: grid;
+    grid-template-columns: 43% minmax(0, 1fr);
+  }
+
+  .registrationPanel {
+    align-items: flex-start;
+    padding-top: 140px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .screen {
+    grid-template-columns: 620px minmax(0, 1fr);
+  }
+}

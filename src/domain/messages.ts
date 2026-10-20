@@ -1,11 +1,20 @@
 /** Textos visibles para el usuario. Fuente única (Constitución, Principio IV). */
 export const MESSAGES = {
+  NAME_REQUIRED: 'Ingresa tu nombre completo',
+  NAME_LENGTH: 'El nombre debe tener entre 1 y 80 caracteres',
   EMAIL_REQUIRED: 'Ingresa tu correo electrónico',
   EMAIL_INVALID: 'Ingresa un correo electrónico válido',
+  EMAIL_TOO_LONG: 'El correo no puede superar 254 caracteres',
   PASSWORD_REQUIRED: 'Ingresa tu contraseña',
   PASSWORD_TOO_SHORT: 'La contraseña debe tener al menos 8 caracteres',
   PASSWORD_TOO_LONG: 'La contraseña no puede superar 128 caracteres',
+  CONFIRMATION_REQUIRED: 'Confirma tu contraseña',
+  PASSWORD_MISMATCH: 'Las contraseñas no coinciden',
+  TERMS_REQUIRED: 'Debes aceptar los términos y condiciones',
   INVALID_CREDENTIALS: 'Correo o contraseña incorrectos',
   UNAVAILABLE: 'Servicio de acceso no disponible. Intenta más tarde.',
+  REGISTRATION_UNAVAILABLE: 'No pudimos crear tu cuenta. Intenta más tarde.',
+  REGISTRATION_SUCCESS: 'Cuenta creada correctamente. Ya puedes iniciar sesión.',
+  COMING_SOON: 'Próximamente',
   FEATURE_UNAVAILABLE: 'Función no disponible en esta demostración',
 } as const;

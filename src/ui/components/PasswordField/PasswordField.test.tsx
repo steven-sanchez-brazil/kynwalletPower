@@ -61,4 +61,11 @@ describe('PasswordField', () => {
     render(<PasswordField label="Contraseña" value="" onChange={() => {}} />);
     await expectNoA11yViolations(document.body);
   });
+
+  it('US3-4: admite un nombre específico para la confirmación', () => {
+    renderField({ visibilityLabel: 'confirmación de contraseña' });
+    expect(
+      screen.getByRole('button', { name: 'Mostrar confirmación de contraseña' }),
+    ).toBeInTheDocument();
+  });
 });

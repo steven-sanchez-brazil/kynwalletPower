@@ -14,9 +14,10 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  successMessage?: string | null;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, successMessage }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -48,6 +49,8 @@ export function LoginForm({ authenticate }: LoginFormProps) {
         <h1 className={styles.title}>Bienvenido de nuevo</h1>
         <p className={styles.subtitle}>Ingresa a tu cuenta para continuar</p>
       </div>
+
+      {successMessage && <Alert tone="info">{successMessage}</Alert>}
 
       <TextField
         label="Correo electrónico"

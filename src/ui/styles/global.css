@@ -9,6 +9,7 @@
 html,
 body {
   margin: 0;
+  max-width: 100%;
 }
 
 body {
@@ -22,6 +23,12 @@ body {
     'Segoe UI',
     sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 button,
