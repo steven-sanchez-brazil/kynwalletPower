@@ -20,11 +20,11 @@
   --neutral-50: #f4f5f9;
 
   /* Valores sin variable en Figma */
-  --brand-gradient: linear-gradient(121.19deg, #ff8a65 0%, #ef5226 70.71%);
+  --brand-gradient: linear-gradient(121.19deg, var(--brand-700) 0%, var(--brand-800) 70.71%);
   --card-surface: rgba(255, 255, 255, 0.16);
   --card-border: rgba(255, 255, 255, 0.35);
   --card-chip: rgba(255, 217, 128, 0.9);
-  --on-brand-muted: rgba(255, 255, 255, 0.85);
+  --on-brand-muted: #ffffff;
   --on-brand-soft: rgba(255, 255, 255, 0.9);
 
   --radius-control: 12px;

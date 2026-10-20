@@ -9,13 +9,15 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    include: ['src/**/*.test.{ts,tsx}'],
     globals: true,
     setupFiles: ['src/test/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },
     coverage: {
       provider: 'v8',
-      include: ['src/**'],
-      exclude: ['src/main.tsx', 'src/test/**', '**/*.d.ts', '**/*.test.{ts,tsx}'],
+      reporter: ['text', 'json', 'json-summary'],
+      include: ['src/**', 'scripts/checkSastReport.mjs', 'scripts/checkCoverage.mjs'],
+      exclude: ['src/test/**', '**/*.d.ts', '**/*.test.{ts,tsx}'],
       thresholds: { lines: 80, branches: 80, functions: 80, statements: 80 },
     },
   },

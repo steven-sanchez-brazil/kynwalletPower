@@ -9,3 +9,20 @@ export const MESSAGES = {
   UNAVAILABLE: 'Servicio de acceso no disponible. Intenta más tarde.',
   FEATURE_UNAVAILABLE: 'Función no disponible en esta demostración',
 } as const;
+
+export const REGISTRATION_MESSAGES = {
+  NAME_REQUIRED: 'Ingresa tu nombre completo',
+  NAME_TOO_LONG: 'El nombre no puede superar 100 caracteres',
+  EMAIL_REQUIRED: MESSAGES.EMAIL_REQUIRED,
+  EMAIL_INVALID: MESSAGES.EMAIL_INVALID,
+  PASSWORD_REQUIRED: MESSAGES.PASSWORD_REQUIRED,
+  PASSWORD_TOO_SHORT: MESSAGES.PASSWORD_TOO_SHORT,
+  PASSWORD_TOO_LONG: MESSAGES.PASSWORD_TOO_LONG,
+  CONFIRM_REQUIRED: 'Confirma tu contraseña',
+  PASSWORD_MISMATCH: 'Las contraseñas no coinciden',
+  TERMS_REQUIRED: 'Debes aceptar los términos y condiciones',
+  UNAVAILABLE: 'No se pudo completar el registro. Inténtalo de nuevo.',
+  SUCCESS:
+    'Registro de demostración completado. Puedes volver al inicio de sesión; no se ha creado una cuenta real.',
+  COMING_SOON: 'Próximamente',
+} as const;

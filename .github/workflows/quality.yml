@@ -1,0 +1,96 @@
+name: Quality
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+env:
+  SEMGREP_IMAGE: semgrep/semgrep:1.177.0@sha256:acaac22ffc7b7cc5926de0751b223bce0b2491c33d18422fa72f632c78d81198
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.20.0
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - name: Comparable baseline and affected coverage
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_REF: ${{ github.base_ref || github.event.repository.default_branch }}
+          BEFORE_SHA: ${{ github.event.before }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = pull_request ]; then
+            BASE="$(git merge-base HEAD "origin/$BASE_REF")"
+          else
+            BASE="$BEFORE_SHA"
+          fi
+          test -n "$BASE"
+          git cat-file -e "$BASE^{commit}"
+          mkdir -p artifacts/reference
+          git archive "$BASE" | tar -x -C artifacts/reference
+          cp vite.config.ts artifacts/reference/vite.config.ts
+          ln -s "$GITHUB_WORKSPACE/node_modules" artifacts/reference/node_modules
+          node node_modules/vitest/vitest.mjs run --root artifacts/reference --coverage
+          export COVERAGE_BASE_SHA="$BASE"
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {execFileSync} from 'node:child_process';
+          import ts from 'typescript';
+          const base=process.env.COVERAGE_BASE_SHA;
+          const files=execFileSync('git',['diff','--name-only','--diff-filter=ACMR',base],{encoding:'utf8'}).trim().split('\n').filter(Boolean);
+          const executable=file => {
+            if (!/^(src\/.*\.(ts|tsx)|scripts\/check(SastReport|Coverage)\.mjs)$/.test(file) || /(\.test\.|\.d\.ts$|^src\/test\/)/.test(file)) return false;
+            const emitted=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext,jsx:ts.JsxEmit.ReactJSX}}).outputText.replace(/export\s*\{\s*\};?/g,'').trim();
+            return emitted.length>0;
+          };
+          const inventory={baseSha:base,candidateSha:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),root:process.cwd(),baseRoot:path.resolve('artifacts/reference'),files:files.filter(executable),excluded:files.filter(file=>!executable(file))};
+          fs.writeFileSync('artifacts/coverage-inventory.json',JSON.stringify(inventory,null,2));
+          NODE
+          npm run check:coverage
+  security-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 24.20.0
+      - name: SAST positive and negative fixtures
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/fixtures
+          cp tests/security/sast-fixtures/*.js artifacts/fixtures/
+          docker run --rm --entrypoint semgrep -v "$PWD/artifacts/fixtures:/src" -v "$PWD/.semgrep.yml:/rules.yml:ro" -w /src "$SEMGREP_IMAGE" scan --config /rules.yml --metrics=off --disable-version-check --disable-nosem --strict --error safe.js
+          if docker run --rm --entrypoint semgrep -v "$PWD/artifacts/fixtures:/src" -v "$PWD/.semgrep.yml:/rules.yml:ro" -w /src "$SEMGREP_IMAGE" scan --config /rules.yml --metrics=off --disable-version-check --disable-nosem --strict --error --json --output unsafe-report.json unsafe.js; then
+            echo "Unsafe fixture did not block"
+            exit 1
+          fi
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const r=JSON.parse(fs.readFileSync('artifacts/fixtures/unsafe-report.json','utf8'));
+          const expected=['kynwallet-no-eval','kynwallet-no-function-constructor','kynwallet-no-inner-html','kynwallet-no-password-logging'];
+          if(r.errors.length || expected.some(id=>!r.results.some(result=>result.check_id.endsWith(id)))) throw new Error('SAST fixture detection incomplete');
+          NODE
+      - name: Scan owned executable code and verify complete analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import {execFileSync} from 'node:child_process';
+          const files=execFileSync('git',['ls-files'],{encoding:'utf8'}).trim().split('\n').filter(file=>/\.(ts|tsx|js|mjs)$/.test(file)&&!file.startsWith('tests/security/sast-fixtures/'));
+          fs.writeFileSync('artifacts/sast-targets.json',JSON.stringify(files));
+          NODE
+          docker run --rm --entrypoint semgrep -v "$PWD:/src" -w /src "$SEMGREP_IMAGE" scan --config .semgrep.yml --metrics=off --disable-version-check --disable-nosem --strict --error --json --output artifacts/sast.json .
+          npm run check:sast

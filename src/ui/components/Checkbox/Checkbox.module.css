@@ -42,3 +42,11 @@
   color: var(--neutral-700);
   cursor: pointer;
 }
+.error {
+  margin: 6px 0 0;
+  color: var(--danger-600);
+  font-size: 14px;
+}
+.box {
+  flex-shrink: 0;
+}

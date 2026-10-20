@@ -14,6 +14,7 @@ export function TextField({
   endAdornment,
   ref,
   className,
+  'aria-describedby': description,
   ...inputProps
 }: TextFieldProps) {
   const inputId = useId();
@@ -30,12 +31,14 @@ export function TextField({
           ref={ref}
           className={styles.input}
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? errorId : undefined}
+          aria-describedby={
+            [description, error ? errorId : undefined].filter(Boolean).join(' ') || undefined
+          }
         />
         {endAdornment}
       </div>
       {error && (
-        <p id={errorId} className={styles.error}>
+        <p id={errorId} className={styles.error} aria-live="polite">
           {error}
         </p>
       )}

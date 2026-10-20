@@ -47,3 +47,16 @@
   font-size: 14px;
   color: var(--neutral-600);
 }
+.link {
+  color: var(--brand-700);
+  font-weight: 600;
+  text-decoration: none;
+}
+.link:hover {
+  text-decoration: underline;
+}
+@media (max-width: 359px) {
+  .social {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

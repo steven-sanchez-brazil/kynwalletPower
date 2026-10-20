@@ -1,0 +1,26 @@
+rules:
+  - id: kynwallet-no-eval
+    languages: [javascript, typescript]
+    message: Dynamic evaluation is prohibited.
+    severity: ERROR
+    pattern: eval(...)
+  - id: kynwallet-no-function-constructor
+    languages: [javascript, typescript]
+    message: Dynamic code construction is prohibited.
+    severity: ERROR
+    pattern: new Function(...)
+  - id: kynwallet-no-inner-html
+    languages: [javascript, typescript]
+    message: Use context-safe rendering instead of assigning raw HTML.
+    severity: ERROR
+    pattern-either:
+      - pattern: $TARGET.innerHTML = $VALUE
+      - pattern: $TARGET.outerHTML = $VALUE
+      - pattern: $TARGET.insertAdjacentHTML(...)
+  - id: kynwallet-no-password-logging
+    languages: [javascript, typescript]
+    message: Credentials must not be logged.
+    severity: ERROR
+    pattern-either:
+      - pattern: console.$METHOD($VALUE.password, ...)
+      - pattern: console.$METHOD($VALUE.confirmPassword, ...)

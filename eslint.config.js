@@ -9,7 +9,21 @@ const layer = (patterns, message) => ({
 });
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'node_modules', '.specify', '.claude', 'specs'] },
+  {
+    ignores: [
+      'dist',
+      'build',
+      'coverage',
+      'artifacts',
+      'node_modules',
+      '.specify',
+      '.claude',
+      '.agents',
+      'specs',
+      'tests/security/sast-fixtures',
+      '**/*.min.js',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   {
@@ -22,6 +36,7 @@ export default tseslint.config(
       'no-console': 'error',
     },
   },
+  { files: ['scripts/**/*.mjs'], languageOptions: { globals: globals.node } },
   // Regla de dependencias de Clean Architecture (Constitución 3.2, 3.5)
   {
     files: ['src/domain/**'],
