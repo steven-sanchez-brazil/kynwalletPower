@@ -5,6 +5,26 @@ import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
 import { App } from './App';
 
+describe('App · navegación de registro', () => {
+  const originalPath = window.location.pathname;
+
+  afterEach(() => {
+    window.history.replaceState({}, '', originalPath);
+  });
+
+  it('renderiza el registro en /register', () => {
+    window.history.replaceState({}, '', '/register');
+    render(<App authenticate={createAuthStub().authenticate} />);
+    expect(screen.getByRole('heading', { name: 'Crear cuenta' })).toBeInTheDocument();
+  });
+
+  it('mantiene el login en /login', () => {
+    window.history.replaceState({}, '', '/login');
+    render(<App authenticate={createAuthStub().authenticate} />);
+    expect(screen.getByRole('heading', { name: 'Bienvenido de nuevo' })).toBeInTheDocument();
+  });
+});
+
 describe('App · accesibilidad de la pantalla completa (FR-015, SC-005)', () => {
   it('vista de login sin violaciones', async () => {
     const { container } = render(<App authenticate={createAuthStub().authenticate} />);

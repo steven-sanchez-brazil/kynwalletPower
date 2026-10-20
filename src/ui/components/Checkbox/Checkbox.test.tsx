@@ -24,4 +24,24 @@ describe('Checkbox', () => {
     const { container } = render(<Controlled />);
     await expectNoA11yViolations(container);
   });
+
+  it('asocia el error con la casilla y la marca como inválida', () => {
+    render(
+      <Checkbox
+        label="Acepto los términos y condiciones"
+        checked={false}
+        description="Lee las condiciones antes de aceptar."
+        error="Debes aceptar los términos y condiciones"
+        onChange={() => {}}
+      />,
+    );
+
+    const checkbox = screen.getByRole('checkbox', {
+      name: 'Acepto los términos y condiciones',
+    });
+    expect(checkbox).toHaveAttribute('aria-invalid', 'true');
+    expect(checkbox).toHaveAccessibleDescription(
+      'Lee las condiciones antes de aceptar. Debes aceptar los términos y condiciones',
+    );
+  });
 });

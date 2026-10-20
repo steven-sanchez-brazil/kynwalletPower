@@ -1,4 +1,11 @@
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.control {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -41,4 +48,17 @@
   font-weight: 500;
   color: var(--neutral-700);
   cursor: pointer;
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger-600);
+}
+
+.description {
+  margin: 0;
+  font-size: 13px;
+  color: var(--neutral-600);
 }
