@@ -139,11 +139,40 @@ aprobarse por el responsable de diseño.
 8.7. **Observabilidad**: los componentes DEBEN emitir logs estructurados y métricas que
 permitan diagnosticar fallos sin exponer datos sensibles (Principio V).
 
+8.8. **Conflictos entre el diseño de referencia y la Constitución**: Figma, sus capturas y
+exportaciones aprobadas son la referencia visual de la interfaz. Si esa referencia entra en
+conflicto con un requisito de esta constitución, incluido el de accesibilidad de 8.4, el agente
+DEBE aplicar el siguiente procedimiento antes de implementar o modificar el elemento afectado:
+   a. Informar al usuario qué elemento y qué requisito entran en conflicto, citando la
+      referencia de diseño y la regla constitucional aplicable; explicar el impacto de
+      conservar el diseño y el de ajustarlo, con alternativas concretas.
+   b. Preguntar al usuario qué criterio debe mantenerse: el diseño de referencia o el requisito
+      constitucional. NO DEBE decidirlo por iniciativa propia ni alterar colores, tipografía,
+      distribución u otros atributos visuales para resolver el conflicto sin esa decisión.
+   c. Esperar una respuesta explícita antes de actuar sobre el elemento en conflicto. Puede
+      continuar el trabajo independiente. La falta de respuesta o la aprobación general de un
+      plan NO DEBEN interpretarse como aprobación de una desviación visual o constitucional.
+      No es necesario repetir la consulta si el mismo conflicto ya tiene una decisión explícita
+      registrada y su alcance no ha cambiado.
+   d. Registrar la decisión, su justificación y los requisitos afectados en la especificación
+      y el plan de la funcionalidad, cuando existan. Si se mantiene un diseño que incumple un
+      requisito constitucional, tramitar y registrar la excepción conforme a 9.1 antes de
+      integrar; NO DEBE declararse que ese requisito se cumple ni ocultarse el hallazgo.
+   e. Someter las desviaciones visuales a la aprobación prevista en 8.6. Este procedimiento
+      NO otorga al diseño prioridad automática sobre la Constitución ni al agente autoridad
+      para resolver el conflicto sin consultar al usuario.
+
 ## Governance
 
-9.1. **Supremacía**: esta constitución prevalece sobre cualquier otra práctica de desarrollo
-del proyecto. Las excepciones DEBEN ser temporales, documentadas, aprobadas y registradas con
-fecha de vencimiento.
+9.1. **Supremacía y excepciones**: esta constitución prevalece sobre cualquier otra práctica de
+desarrollo del proyecto. Su supremacía NO autoriza al agente a modificar unilateralmente el
+diseño de referencia: los conflictos visuales DEBEN seguir el procedimiento de consulta de
+8.8. Las excepciones DEBEN ser temporales, documentadas, aprobadas por los responsables
+designados y registradas con fecha de vencimiento. Si el usuario elige conservar un diseño que
+incumple un requisito constitucional, esa elección DEBE registrarse y acompañarse de la
+excepción correspondiente, indicando requisito afectado, alcance, justificación, impacto,
+responsables de aprobación y vencimiento. La elección del usuario NO sustituye las aprobaciones
+exigidas cuando correspondan a otros responsables.
 9.2. **Trazabilidad**: DEBE mantenerse trazabilidad bidireccional entre requisitos (BRD,
 especificaciones), decisiones de arquitectura (ARD, ADR, planes), implementación (commits,
 pull requests) y pruebas. Todo cambio DEBE referenciar el requisito, historia o tarea que lo
@@ -168,4 +197,4 @@ ampliadas materialmente; PATCH para aclaraciones y correcciones de redacción.
 9.8. **Revisión periódica**: el cumplimiento y vigencia de esta constitución DEBEN revisarse
 al menos una vez al año o ante cambios en las políticas corporativas.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-14 | **Last Amended**: 2026-10-14
+**Version**: 1.1.0 | **Ratified**: 2026-10-14 | **Last Amended**: 2026-10-19

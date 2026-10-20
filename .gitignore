@@ -1,5 +1,6 @@
 # Dependencias y artefactos
 node_modules/
+.npm-cache/
 dist/
 build/
 coverage/
@@ -20,6 +21,7 @@ Thumbs.db
 
 
 # Agentes de IA (cada quien usa el suyo)
+/.agents/
 .gemini/
 GEMINI.md
 .claude/
@@ -27,3 +29,7 @@ CLAUDE.md
 .copilot/
 .cursor/
 .kiro/
+
+# Otros archivos de entorno no deben versionarse; conservar el ejemplo público.
+.env*
+!.env.example

@@ -1,0 +1,73 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.heading {
+  margin-bottom: 4px;
+}
+.heading h1 {
+  margin: 0 0 6px;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.heading p {
+  margin: 0;
+  color: var(--neutral-600);
+  font-size: 16px;
+  line-height: 1.2;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.terms {
+  margin: 2px 0 0;
+}
+.socialSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+}
+.social {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--neutral-600);
+}
+.footer a {
+  color: var(--brand-700);
+  font-weight: 600;
+  text-decoration: none;
+}
+.footer a:hover {
+  text-decoration: underline;
+}
+.demo {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--neutral-600);
+  text-align: center;
+}
+.terms {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0 4px;
+}
+.terms > button {
+  font-size: 14px;
+  line-height: 1.4;
+}

@@ -1,0 +1,26 @@
+﻿.screen {
+  min-height: 100dvh;
+}
+.brand {
+  display: none;
+}
+.formPanel {
+  padding: 40px 16px;
+}
+.content {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+@media (min-width: 1024px) {
+  .screen {
+    display: grid;
+    grid-template-columns: 43.0556% 1fr;
+  }
+  .brand {
+    display: block;
+  }
+  .formPanel {
+    padding: clamp(40px, 13.672vh, 140px) 52px 60px 32px;
+  }
+}

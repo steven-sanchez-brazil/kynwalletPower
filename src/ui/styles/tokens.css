@@ -35,3 +35,7 @@
 
   --focus-ring: 0 0 0 2px var(--neutral-0), 0 0 0 4px var(--neutral-900);
 }
+
+:root {
+  --registration-gradient: linear-gradient(60deg, #ff8a65 31.7%, #ef5226 83.46%);
+}

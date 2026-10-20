@@ -6,3 +6,4 @@ specs
 .specify
 .claude
 package-lock.json
+.npm-cache

@@ -1,4 +1,4 @@
-import { act, render, screen } from '@testing-library/react';
+﻿import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createAuthStub } from '@/test/authStub';
 import { TEST_ACCOUNT } from '@/test/fixtures';
@@ -179,7 +179,7 @@ describe('LoginForm · US3 Validar los campos antes de enviar', () => {
 });
 
 describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
-  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple', 'Regístrate'])(
+  it.each(['¿Olvidaste tu contraseña?', 'Google', 'Apple'])(
     'US5-1: "%s" muestra el aviso y conserva los datos',
     async (name) => {
       const { user, stub, email, password } = setup();
@@ -218,7 +218,7 @@ describe('LoginForm · US5 Elementos del diseño fuera de alcance', () => {
       screen.getByRole('button', { name: 'Iniciar sesión' }),
       screen.getByRole('button', { name: 'Google' }),
       screen.getByRole('button', { name: 'Apple' }),
-      screen.getByRole('button', { name: 'Regístrate' }),
+      screen.getByRole('link', { name: 'Regístrate' }),
     ];
     for (const element of expected) {
       await user.tab();
@@ -262,3 +262,15 @@ describe('LoginForm · seguridad (FR-012)', () => {
     consoleSpies.forEach((spy) => spy.mockRestore());
   });
 });
+
+it.each(['ctrlKey', 'metaKey', 'shiftKey', 'altKey'] as const)(
+  'REG-US3 enlace de login con %s permite abrir en otra pestaña',
+  (key) => {
+    const onRegister = vi.fn();
+    render(<LoginForm authenticate={createAuthStub().authenticate} onRegister={onRegister} />);
+    const link = screen.getByRole('link', { name: 'Regístrate' });
+    link.addEventListener('click', (event) => event.preventDefault());
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, [key]: true }));
+    expect(onRegister).not.toHaveBeenCalled();
+  },
+);

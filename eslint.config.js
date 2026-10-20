@@ -1,4 +1,4 @@
-import js from '@eslint/js';
+﻿import js from '@eslint/js';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
@@ -9,7 +9,19 @@ const layer = (patterns, message) => ({
 });
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage', 'node_modules', '.specify', '.claude', 'specs'] },
+  {
+    ignores: [
+      'dist',
+      'build',
+      'coverage',
+      'node_modules',
+      '.npm-cache',
+      '.specify',
+      '.claude',
+      'specs',
+      '**/*.min.js',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.strict,
   {
@@ -21,6 +33,10 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
       'no-console': 'error',
     },
+  },
+  {
+    files: ['src/infrastructure/demoDiagnostics.ts'],
+    rules: { 'no-console': ['error', { allow: ['info', 'warn'] }] },
   },
   // Regla de dependencias de Clean Architecture (Constitución 3.2, 3.5)
   {

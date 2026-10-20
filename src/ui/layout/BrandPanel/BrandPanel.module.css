@@ -105,3 +105,37 @@
     color: var(--on-brand-soft);
   }
 }
+
+/* Variante de registro: no modifica el panel existente del login. */
+.registration {
+  background: var(--registration-gradient);
+  height: 100%;
+}
+@media (min-width: 1024px) {
+  .registration {
+    min-height: 1024px;
+    display: grid;
+    grid-template-rows: 288px 1fr 210px;
+    gap: 48px;
+    padding: 64px 56px;
+  }
+  .registration .headline {
+    align-self: start;
+    gap: 12px;
+  }
+  .registration .title,
+  .registration .subtitle,
+  .registration .logoText {
+    color: var(--neutral-0);
+  }
+  .registration .logo img {
+    width: 14px;
+    height: 28px;
+  }
+  .registration .logo {
+    gap: 8px;
+  }
+  .registration .title {
+    font-size: 44px;
+  }
+}

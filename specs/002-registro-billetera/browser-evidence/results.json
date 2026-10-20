@@ -1,0 +1,76 @@
+{
+  "viewports": [
+    {
+      "width": 320,
+      "scrollWidth": 320,
+      "heading": {
+        "x": 16,
+        "y": 40
+      },
+      "formWidth": 288,
+      "brandVisible": false
+    },
+    {
+      "width": 375,
+      "scrollWidth": 375,
+      "heading": {
+        "x": 16,
+        "y": 40
+      },
+      "formWidth": 343,
+      "brandVisible": false
+    },
+    {
+      "width": 768,
+      "scrollWidth": 768,
+      "heading": {
+        "x": 184,
+        "y": 40
+      },
+      "formWidth": 400,
+      "brandVisible": false
+    },
+    {
+      "width": 1024,
+      "scrollWidth": 1024,
+      "heading": {
+        "x": 522.4375,
+        "y": 140
+      },
+      "formWidth": 400,
+      "brandVisible": true
+    },
+    {
+      "width": 1440,
+      "scrollWidth": 1440,
+      "heading": {
+        "x": 820,
+        "y": 140
+      },
+      "formWidth": 400,
+      "brandVisible": true
+    }
+  ],
+  "axe": [
+    {
+      "state": "empty-desktop",
+      "violations": []
+    },
+    {
+      "state": "errors-desktop",
+      "violations": []
+    },
+    {
+      "state": "errors-mobile",
+      "violations": []
+    }
+  ],
+  "flow": {
+    "emptyValidation": true,
+    "text200NoHorizontalOverflow": true,
+    "successMs": 563,
+    "connectedLinks": true,
+    "reloadedNoticeCleared": true,
+    "registrationNetworkRequests": 0
+  }
+}

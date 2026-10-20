@@ -1,4 +1,4 @@
-# KynWallet · Inicio de sesión (demo)
+﻿# KynWallet · Login y registro (demo)
 
 Demostración funcional, solo del lado del cliente, de la pantalla de inicio de sesión de la
 billetera virtual KynWallet. Reproduce el diseño de Figma
@@ -9,12 +9,12 @@ Especificación, plan y tareas: [`specs/001-login-billetera/`](specs/001-login-b
 
 ## Requisitos
 
-- Node.js 20 LTS o superior y npm 10 o superior.
+- Node.js 22.12+ y npm compatible (validado con Node 24.22.0 y npm 11.19.1).
 
 ## Configuración
 
 ```bash
-npm install
+npm ci
 cp .env.example .env.local
 ```
 
@@ -73,5 +73,27 @@ requisito que verifica (por ejemplo, `US2-1`, `FR-012`) para mantener la trazabi
   en `src/ui/styles/tokens.css`). Detalle en `specs/001-login-billetera/research.md` (R3).
 - Los iconos de Google, Apple y del control de visibilidad son los marcadores de posición del
   diseño de Figma.
-- Fuera de alcance: recuperar contraseña, registro, acceso con Google/Apple, persistencia de
+- Fuera de alcance: recuperar contraseña, acceso real con Google/Apple, persistencia de
   "Recordarme" y bloqueo por intentos fallidos. Al activarlos se muestra un aviso.
+
+## Registro de demostración
+
+Abre <http://localhost:5173/register> o activa **Regístrate** en el login. **Inicia sesión** vuelve a `/login`; `/` sigue mostrando el login. Los cuatro campos y los términos son obligatorios, el correo debe ser válido y ambas contraseñas deben coincidir (8–128 caracteres). Los errores aparecen junto al campo; el nombre admite 1–100 caracteres y el correo hasta 254.
+
+El registro usa una API ficticia local con demora de 500 ms: **no envía peticiones, no crea cuentas y no guarda datos**. Al terminar navega a `/login` con confirmación temporal. Para iniciar sesión se siguen utilizando las cuentas ficticias de `VITE_DEMO_USERS`; las credenciales del registro no habilitan acceso.
+
+Para demostrar un fallo, añade en `.env.local` y reinicia Vite:
+
+```dotenv
+VITE_DEMO_REGISTRATION_MODE=unavailable
+```
+
+Cámbialo a `success` (valor predeterminado si no se define) para demostrar éxito. Un valor no reconocido produce indisponibilidad controlada. Google y Apple muestran «Próximamente»; términos informa que su documento no está disponible. No uses datos reales ni secretos.
+
+El formulario reutiliza componentes del login, con dominio de validación puro, caso de uso `register`, puerto `RegistrationGateway` y `FakeRegistrationGateway` inyectado en `main.tsx`. El estado es local; navegación mediante History API y éxito solo en memoria. La pantalla muestra dos paneles desde 1024 px y solo el formulario por debajo, desde 320 px.
+
+Diseño: `.prompts/registro/04 · Registro.png` y `styles.css`. Se conservan tipografía y geometría; se adaptan tonos para accesibilidad. Los ajustes y revisiones pendientes se documentan en [`design-review.md`](specs/002-registro-billetera/design-review.md). No se afirma haber accedido al archivo remoto Figma.
+
+Pruebas unitarias, contratos fake e integración con Vitest/Testing Library/axe-core: `npm test` y `npm run test:coverage`. Para una compilación local: `npm run build` y `npm run preview`. En hosting estático configura fallback de `/register` y `/login` a `index.html` para acceso directo y recarga. No se requiere backend ni API externa.
+
+Guía y evidencia: [`quickstart.md`](specs/002-registro-billetera/quickstart.md), [`validation.md`](specs/002-registro-billetera/validation.md) y [`tasks.md`](specs/002-registro-billetera/tasks.md).
