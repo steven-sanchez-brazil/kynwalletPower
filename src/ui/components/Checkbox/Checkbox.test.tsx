@@ -24,4 +24,24 @@ describe('Checkbox', () => {
     const { container } = render(<Controlled />);
     await expectNoA11yViolations(container);
   });
+
+  it('FR-008: consultar el enlace no acepta la casilla y el error se anuncia', async () => {
+    const onAction = vi.fn();
+    const { container } = render(
+      <Checkbox
+        label="Acepto los"
+        actionLabel="términos y condiciones"
+        onAction={onAction}
+        checked={false}
+        onChange={vi.fn()}
+        error="Debes aceptar los términos y condiciones"
+      />,
+    );
+    const box = screen.getByRole('checkbox', { name: 'Acepto los términos y condiciones' });
+    expect(box).toHaveAttribute('aria-invalid', 'true');
+    await userEvent.click(screen.getByRole('button', { name: 'términos y condiciones' }));
+    expect(onAction).toHaveBeenCalledOnce();
+    expect(box).not.toBeChecked();
+    await expectNoA11yViolations(container);
+  });
 });

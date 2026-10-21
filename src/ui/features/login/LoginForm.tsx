@@ -14,9 +14,11 @@ import styles from './LoginForm.module.css';
 
 type LoginFormProps = {
   authenticate: Authenticate;
+  onRegister?: () => void;
+  registrationNotice?: string;
 };
 
-export function LoginForm({ authenticate }: LoginFormProps) {
+export function LoginForm({ authenticate, onRegister, registrationNotice }: LoginFormProps) {
   const { state, change, blur, submit, logout, toggleRemember, showNotice } =
     useLoginForm(authenticate);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -105,12 +107,21 @@ export function LoginForm({ authenticate }: LoginFormProps) {
       </div>
 
       {state.notice && <Alert tone="info">{state.notice}</Alert>}
+      {registrationNotice && <Alert tone="info">{registrationNotice}</Alert>}
 
       <p className={styles.footer}>
         ¿No tienes cuenta?
-        <Button variant="link" onClick={notAvailable}>
+        <a
+          href="/registro"
+          onClick={(event) => {
+            if (onRegister) {
+              event.preventDefault();
+              onRegister();
+            }
+          }}
+        >
           Regístrate
-        </Button>
+        </a>
       </p>
     </form>
   );

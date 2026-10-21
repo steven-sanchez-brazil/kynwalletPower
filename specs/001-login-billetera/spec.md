@@ -144,7 +144,7 @@ verifica que el texto se muestra; se vuelve a activar y se oculta.
 ### User Story 5 - Elementos del diseño fuera del alcance de la demostración (Priority: P3)
 
 Como usuario de la demostración, quiero que los elementos visibles del diseño que no forman
-parte del alcance ("¿Olvidaste tu contraseña?", Google, Apple, "Regístrate") me informen que no
+parte del alcance ("¿Olvidaste tu contraseña?", Google, Apple) me informen que no
 están disponibles, para no quedar con la impresión de un error.
 
 **Why this priority**: garantiza fidelidad al diseño de referencia sin ampliar el alcance
@@ -155,7 +155,7 @@ funcional (YAGNI).
 **Acceptance Scenarios**:
 
 1. **Given** la pantalla de inicio de sesión, **When** el usuario activa "¿Olvidaste tu
-   contraseña?", "Google", "Apple" o "Regístrate", **Then** se muestra el aviso "Función no
+   contraseña?", "Google" o "Apple", **Then** se muestra el aviso "Función no
    disponible en esta demostración" y la pantalla conserva los datos ingresados.
 2. **Given** la casilla "Recordarme", **When** el usuario la marca o desmarca, **Then** la
    casilla cambia de estado visualmente sin almacenar ningún dato.
@@ -214,9 +214,9 @@ funcional (YAGNI).
 - **FR-015**: La pantalla DEBE cumplir WCAG 2.1 nivel AA: etiquetas asociadas a cada campo,
   errores anunciados por tecnologías de asistencia, mensajes de resultado anunciados de forma
   automática y contraste suficiente.
-- **FR-016**: Los elementos "¿Olvidaste tu contraseña?", "Google", "Apple" y "Regístrate" DEBEN
-  mostrarse según el diseño y, al activarse, informar "Función no disponible en esta
-  demostración".
+- **FR-016**: Los elementos "¿Olvidaste tu contraseña?", "Google" y "Apple" DEBEN mostrarse
+  según el diseño y, al activarse, informar "Función no disponible en esta demostración". El
+  vínculo "Regístrate" DEBE llevar a `/registro`, conforme a `specs/002-registro/spec.md`.
 - **FR-017**: La casilla "Recordarme" DEBE mostrarse y cambiar de estado, sin persistir datos.
 - **FR-018**: La pantalla DEBE adaptarse a anchos desde 320 px hasta escritorio sin
   desplazamiento horizontal; en anchos reducidos el panel de marca puede simplificarse u

@@ -1,8 +1,10 @@
 # Dependencias y artefactos
 node_modules/
+.npm-cache/
 dist/
 build/
 coverage/
+coverage-*/
 *.log
 
 # Variables de entorno locales (Constitución 5.3)

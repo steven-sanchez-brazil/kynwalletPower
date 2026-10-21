@@ -9,6 +9,8 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    maxWorkers: 2,
+    testTimeout: 15000,
     globals: true,
     setupFiles: ['src/test/setup.ts'],
     css: { modules: { classNameStrategy: 'non-scoped' } },

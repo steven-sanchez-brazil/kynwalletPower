@@ -46,6 +46,10 @@
     max-width: 508px;
   }
 
+  .registration .headline {
+    transform: translateY(50px);
+  }
+
   .title {
     margin: 0;
     font-size: 44px;

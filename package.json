@@ -15,6 +15,7 @@
     "format:write": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --passWithNoTests",
+    "test:registro": "vitest run src/domain/registration.test.ts src/application/registerAccount.test.ts src/infrastructure/InMemoryRegistrationGateway.test.ts src/ui/features/registration/RegistrationForm.test.tsx src/ui/components/Checkbox/Checkbox.test.tsx src/App.test.tsx --testNamePattern=\"Registro|registro|FR-008\"",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "audit:deps": "npm audit --audit-level=high",
